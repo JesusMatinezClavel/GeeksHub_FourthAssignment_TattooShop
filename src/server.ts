@@ -8,6 +8,10 @@ const PORT = process.env.PORT || 4001
 import { app } from "./app"
 
 // Ponemos en marcha el servidor
-app.listen(PORT, () => {
-    console.log(`the server is up on port ${PORT}`)
-})
+const riseServer = () => {
+    app.listen(PORT, () => {
+        console.log(`the server is up on port ${PORT}`)
+    })
+}
+
+riseServer()
