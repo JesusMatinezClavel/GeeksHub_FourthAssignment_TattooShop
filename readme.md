@@ -1,0 +1,1 @@
+![Diagram for the first tables created](./img/Diagram_Tables.png)
