@@ -23,15 +23,16 @@ app.get("/healthy", (req: Request, res: Response) => {
     })
 })
 
+// Creamos las rutas para las distintas tablas importando las funciones desde la carpeta ./src/Controllers
 
-///////////////////////////////////////////// Roles routes
+//                                             Roles routes
 
 app.get('/roles', getRoles)
 app.post('/roles', createRoles)
 app.put('/roles', updateRoles)
 app.delete('/roles', deleteRoles)
 
-////////////////////////////////////////////// User routes
+//                                              User routes
 
 app.get('/users', getUsers)
 app.post('/users', createUsers)

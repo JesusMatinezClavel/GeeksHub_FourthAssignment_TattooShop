@@ -1,8 +1,10 @@
+// Creamos este .ts a través del terminal con typeorm migration:create
 import { MigrationInterface, QueryRunner, Table, TableUnique } from "typeorm";
 
 export class Appointments1708976782137 implements MigrationInterface {
-
+    // Llamaremos a esta función con el script "run-migrations" para crear la carpeta en cuestión.
     public async up(queryRunner: QueryRunner): Promise<void> {
+        // Llamaremos a esta función con el script "run-migrations" para crear la carpeta en cuestión.
         await queryRunner.createTable(
             new Table({
                 name: "appointments",
@@ -51,7 +53,7 @@ export class Appointments1708976782137 implements MigrationInterface {
             })
         )
     }
-
+    // Llamaremos a esta función con el script "revert-migrations" para borrar ultima carpeta creada.
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable("appointments")
     }
