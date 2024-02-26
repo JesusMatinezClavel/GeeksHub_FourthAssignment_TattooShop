@@ -6,13 +6,13 @@ const PORT = process.env.PORT || 4001
 
 // importamos app desde app.ts y db.ts
 import { app } from "./app"
-import { AppDataSource } from './db'
+import { AppDataSource } from './database/db'
 
 // Ponemos en marcha el servidor
 const riseServer = () => {
     AppDataSource.initialize()
         .then(() => {
-            console.log('database conected')
+            console.log(`database connected on port ${process.env.DB_port}`)
             app.listen(PORT, () => {
                 console.log(`the server is up on port ${PORT}`)
             })
@@ -22,7 +22,5 @@ const riseServer = () => {
         })
 }
 
-
-
-
+// Ejecutamos la función para levantar el servidor cuando la base de datos esté conectada
 riseServer()
