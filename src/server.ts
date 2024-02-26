@@ -1,5 +1,6 @@
-// Importamos el package Express
+// Importamos el package Express, junto con el Request y Response
 import express, { Application } from "express"
+import { Request, Response } from "express";
 
 // Importamos la config de dotenv
 import 'dotenv/config'
@@ -14,6 +15,14 @@ app.use(express.json());
 const PORT = process.env.PORT || 4001
 
 // Ponemos en marcha el servidor
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`the server is up on port ${PORT}`)
+})
+
+// Comprobamos si el servidor responde correctamente
+app.get("/healthy", (req:Request, res:Response) => {
+    res.status(200).json({
+        serverUp: true,
+        message: `the server is healthy`
+    })
 })
