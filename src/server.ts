@@ -8,15 +8,18 @@ const PORT = process.env.PORT || 4001
 import { app } from "./app"
 import { AppDataSource } from './database/db'
 
-// Ponemos en marcha el servidor
+// Ponemos en marcha el servidor tras comprobar que la base de datos está conectada
 const riseServer = () => {
     AppDataSource.initialize()
+        // Si la base de datos está conectada nos avisará por el terminal del puerto
         .then(() => {
             console.log(`database connected on port ${process.env.DB_port}`)
+            // Cuando la base de datos está encendida se inicia el servidor en el puerto asignado
             app.listen(PORT, () => {
                 console.log(`the server is up on port ${PORT}`)
             })
         })
+        // Si la base de datos no está conectada nos dará un error
         .catch(error => {
             console.log(error)
         })
