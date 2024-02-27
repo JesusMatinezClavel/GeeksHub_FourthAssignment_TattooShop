@@ -28,7 +28,8 @@ export class Services1708977243636 implements MigrationInterface {
                         isNullable: false
                     }
                 ]
-            })
+            }),
+            true
         )
     }
     // Llamaremos a esta función con el script "revert-migrations" para borrar ultima carpeta creada.

@@ -21,7 +21,8 @@ export class Roles1708974400667 implements MigrationInterface {
                         length: "40"
                     }
                 ]
-            })
+            }),
+            true
         )
     }
     // Llamaremos a esta función con el script "revert-migrations" para borrar ultima carpeta creada.

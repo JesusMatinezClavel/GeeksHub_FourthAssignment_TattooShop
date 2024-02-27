@@ -50,7 +50,8 @@ export class Appointments1708976782137 implements MigrationInterface {
                         columnNames: ["user_id","service_id"]
                     })
                 ]
-            })
+            }),
+            true
         )
     }
     // Llamaremos a esta función con el script "revert-migrations" para borrar ultima carpeta creada.

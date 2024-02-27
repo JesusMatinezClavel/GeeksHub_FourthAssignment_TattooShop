@@ -9,7 +9,7 @@ import { app } from "./app"
 import { AppDataSource } from './database/db'
 
 // Ponemos en marcha el servidor tras comprobar que la base de datos está conectada
-const riseServer = () => {
+const startServer = () => {
     AppDataSource.initialize()
         // Si la base de datos está conectada nos avisará por el terminal del puerto
         .then(() => {
@@ -26,4 +26,4 @@ const riseServer = () => {
 }
 
 // Ejecutamos la función para levantar el servidor cuando la base de datos esté conectada
-riseServer()
+startServer()
