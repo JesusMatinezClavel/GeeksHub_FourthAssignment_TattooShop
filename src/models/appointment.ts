@@ -2,20 +2,24 @@ import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColu
 import { user } from "./user"
 import { service } from "./service"
 
+// Utilizamos el BaseEntity de typeorm para servirnos de sus métodos
 @Entity('appointments')
-export class appointment extends BaseEntity{
+export class appointment extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id!: Number
 
-    @Column({name:'appointment_date'})
+    // Dentro de @Column declaramos el nombre real del campo y cualquier otro dato a destacar (type, length) en caso de necesario
+    @Column({ name: 'appointment_date' })
     appointmentDate!: Date
 
-    @ManyToOne(()=>user,(user)=>user.appointments)
-    @JoinColumn({name: 'user_id'})
+    // Vinculamos el campo user_id de appointments a la tabla users
+    @ManyToOne(() => user, (user) => user.appointments)
+    @JoinColumn({ name: 'user_id' })
     user!: user
 
-    @ManyToOne(()=>service,(service)=>service.appointments)
-    @JoinColumn({name: 'service_id'})
+    // Vinculamos el campo service_id de appointments a la tabla services
+    @ManyToOne(() => service, (service) => service.appointments)
+    @JoinColumn({ name: 'service_id' })
     service!: service
 }

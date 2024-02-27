@@ -23,6 +23,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_username || "root",
     password: process.env.DB_password || "",
     database: process.env.DB_database || "test",
+    // Añadimos las entities de la carpeta ./src/models
     entities: [role,user,service,appointment],
     // Añadimos el campo "migrations" para poder crear las tablas a través del terminal
     migrations: [Roles1708974400667,Users1708975838186,Services1708977243636,Appointments1708976782137],

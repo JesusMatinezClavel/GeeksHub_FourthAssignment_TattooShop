@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { role } from "../models/role";
 
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
+// Les añadimos try/catch para manejar los errores
+// Les añadimos 'async' para poder llamar a las entities a través de los métodos de BaseEntity
 export const getRoles = async (req: Request, res: Response) => {
     try {
         res.status(200).json(
@@ -45,7 +47,6 @@ export const createRoles = async (req: Request, res: Response) => {
         )
 
     }
-
 }
 export const updateRoles = async (req: Request, res: Response) => {
     try {
