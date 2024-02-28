@@ -1,17 +1,17 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { user } from "./user"
+import { User } from "./User"
 
 // Utilizamos el BaseEntity de typeorm para servirnos de sus métodos
 @Entity('roles')
-export class role extends BaseEntity{
+export class Role extends BaseEntity{
     @PrimaryGeneratedColumn()
-    id!: Number
+    id!: number
 
     // Dentro de @Column declaramos el nombre real del campo y cualquier otro dato a destacar (type, length) en caso de necesario
     @Column({ name: 'name' })
-    name !: String
+    name !: string
 
     // Vinculamos roles a users aunque roles no tenga una Foreign Key
-    @OneToMany( ()=>user,(user)=>user.role)
-    users!: user[]
+    @OneToMany( ()=>User,(user)=>user.role)
+    users!: User[]
 }

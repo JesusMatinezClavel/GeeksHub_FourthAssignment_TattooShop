@@ -2,9 +2,8 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class Services1708977243636 implements MigrationInterface {
-    // Llamaremos a esta función con el script "run-migrations" para crear la carpeta en cuestión.
+    // Llamaremos a esta función con el script "run-migrations" para crear la tabla en cuestión.
     public async up(queryRunner: QueryRunner): Promise<void> {
-        // Llamaremos a esta función con el script "run-migrations" para crear la carpeta en cuestión.
         await queryRunner.createTable(
             new Table({
                 name: "services",
@@ -26,8 +25,30 @@ export class Services1708977243636 implements MigrationInterface {
                         name: "description",
                         type: "text",
                         isNullable: false
+                //     },
+                //     {
+                //         name: "tattoo_id",
+                //         type: "int",
+                //     },
+                //     {
+                //         name: "piercing_id",
+                //         type: "int",
+                //     }
+                // ],
+                // foreignKeys: [
+                //     {
+                //         columnNames: ["tattoo_id"],
+                //         referencedTableName: "tattoo_catalogue",
+                //         referencedColumnNames: ["id"],
+                //         onDelete: "CASCADE"
+                //     },
+                //     {
+                //         columnNames: ["piercing_id"],
+                //         referencedTableName: "piercing_catalogue",
+                //         referencedColumnNames: ["id"],
+                //         onDelete: "CASCADE"
                     }
-                ]
+                ],
             }),
             true
         )

@@ -1,6 +1,6 @@
 // Importamos las interfaces Request y Response para poder comunicarnos con el servidor
 import { Request, Response } from "express";
-import { role } from "../models/role";
+import { Role } from "../models/Role";
 
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
 // Les añadimos try/catch para manejar los errores
@@ -26,7 +26,7 @@ export const getRoles = async (req: Request, res: Response) => {
 export const createRoles = async (req: Request, res: Response) => {
     const roleBody = req.body.role
     try {
-        const roleIn = await role.create({
+        const roleIn = await Role.create({
             name: roleBody
         }).save()
         res.status(201).json(

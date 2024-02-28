@@ -1,34 +1,34 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { role } from "./role"
-import { appointment } from "./appointment"
+import { Role } from "./Role"
+import { Appointment } from "./Appointment"
 
 // Utilizamos el BaseEntity de typeorm para servirnos de sus métodos
 @Entity('users')
-export class user extends BaseEntity {
+export class User extends BaseEntity {
 
     // Declaramos esta columna como PrimaryGeneratedColumn porque se va a generar automáticamente
     @PrimaryGeneratedColumn()
-    id!: Number
+    id!: number
     
     // Dentro de @Column declaramos el nombre real del campo y cualquier otro dato a destacar (type, length) en caso de necesario
     @Column({ name: 'first_name' })
-    firstName!: String
+    firstName!: string
 
     @Column({ name: 'last_name' })
-    lastName!: String
+    lastName!: string
 
     @Column({ name: 'email' })
-    email!: String
+    email!: string
 
     @Column({ name: 'password' })
-    password!: String
+    password!: string
 
     // Vinculamos el campo role_id de users a la tabla roles
-    @ManyToOne(() => role, (role) => role.users)
+    @ManyToOne(() => Role, (role) => role.users)
     @JoinColumn({ name: 'role_id' })
-    role!: role
+    role!: Role
 
     // Vinculamos users a appointments aunque no tenga una Foreign Key apuntando a appointments.
-    @OneToMany(() => appointment, (appointment) => appointment.user)
-    appointments!: appointment[]
+    @OneToMany(() => Appointment, (appointment) => appointment.user)
+    appointments!: Appointment[]
 }
