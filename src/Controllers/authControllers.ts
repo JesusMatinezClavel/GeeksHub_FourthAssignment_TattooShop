@@ -19,42 +19,43 @@ export const registration = async (req: Request, res: Response) => {
         }
 
         // Validamos la longitud de la contraseña
-        if (password.length > 10 || password.length < 6){
+        if (password.length > 10 || password.length < 6) {
             return res.status(400).json({
                 succes: false,
                 message: `password ${password} not valid`,
             })
         }
-        
+
         // Validamos el formato del email
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!validEmail.test(email)) {
-          return res.status(400).json(
-            {
-              success: false,
-              message: "format email invalid"
-            }
-          )
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "format email invalid"
+                }
+            )
         }
-        
+
 
         const encryptedPassword = bcrypt.hashSync(password, 8)
 
-        await User.create({
+        const newUser = await User.create({
             firstName: name,
             lastName: lastName,
             passwordHash: encryptedPassword,
             email: email
-        })
+        }).save()
 
         res.status(200).json({
             succes: true,
-            message: `New user created`,
+            message: `New user created: ${name} ${lastName}`,
+            data: newUser
         })
     } catch (error) {
         res.status(500).json({
             succes: false,
-            message: `server has failed`,
+            message: `User cannot be registered`,
             error: error
         })
     }
