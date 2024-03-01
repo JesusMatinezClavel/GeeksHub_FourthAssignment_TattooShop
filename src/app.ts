@@ -8,6 +8,7 @@ import 'dotenv/config'
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
 import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
 import { createUsers, deleteUsers, getUsers, updateUsers } from "./Controllers/usersControllers";
+import { registration } from "./Controllers/authControllers";
 
 // Creamos la constante App a partir de express
 export const app: Application = express()
@@ -24,6 +25,11 @@ app.get("/healthy", (req: Request, res: Response) => {
 })
 
 // Creamos las rutas para las distintas tablas importando las funciones desde la carpeta ./src/Controllers
+
+//                               Auth routes
+
+app.post('/api/auth/register', registration)
+
 
 //                               Roles routes
 app.get('/roles', getRoles)
