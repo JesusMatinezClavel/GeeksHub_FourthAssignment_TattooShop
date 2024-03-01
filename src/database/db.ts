@@ -38,7 +38,6 @@ export const AppDataSource = new DataSource({
         Appointments1708976782137,
         TattooCatalogue1709145706696,
         PiercingCatalogue1709145723464,
-        AddColumnsToServices1709153874646
         ],
     synchronize: false,
     logging: false
