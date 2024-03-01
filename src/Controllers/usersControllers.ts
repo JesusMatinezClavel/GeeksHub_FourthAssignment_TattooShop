@@ -5,6 +5,7 @@ import { TokenData } from "../types";
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
+        // Llamamos a todos los usuarios
         const getAllUsers = await User.find({
             select: {
                 id: true,
@@ -38,11 +39,14 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const getUserById = async (req: Request, res: Response) => {
     try {
+        // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
         const userID = req.tokenData.userID
-        const getAllUsers = await User.find({
+        const getAllUsers = await User.findOne({
+            // Filtramos por nuestro propio id
             where: {
                 id: userID
             },
+            // Seleccionamos los datos a mostrar
             select: {
                 id: true,
                 firstName: true,

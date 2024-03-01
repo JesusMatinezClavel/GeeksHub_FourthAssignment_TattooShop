@@ -118,7 +118,8 @@ export const login = async (req: Request, res: Response) => {
                 message: `The password: ${password} is incorrect!`
             })
         }
-        // Creamos el token a través del package JsonWebToken y le vinculamos los valores del user.id(user?.id) con el role_id (user?.role)
+        // Creamos el token a través del package JsonWebToken 
+        // Le vinculamos los valores del user.id(user?.id) con el role_id (user?.role)
         const token = jwt.sign({
             userID: user?.id,
             roleName: user?.role.rolename
