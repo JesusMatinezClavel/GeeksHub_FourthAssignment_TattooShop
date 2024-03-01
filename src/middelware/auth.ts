@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import 'dotenv/config'
 import { TokenData } from "../types";
 
-export const auth = (req: Request, res: Response, next:NextFunction) => {
+export const auth = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.split(" ")[1]
 
@@ -15,12 +15,19 @@ export const auth = (req: Request, res: Response, next:NextFunction) => {
         }
 
         const isTokenValid = jwt.verify(token, process.env.JWT_secret as string) as TokenData
-
-        req.tokenData = {
-            userID: isTokenValid.userID,
-            userRole: isTokenValid.userRole
+        if (!isTokenValid){
+            return res.status(400).json({
+                succes: false,
+                message: `token not valid`,
+            })
         }
-
+        req.tokenData = {
+            userID:isTokenValid.userID,
+            roleName: isTokenValid.roleName
+        }
+        // const decoded = jwt.decode(token)
+        // req.tokenData = decoded as TokenData
+    
         next()
     } catch (error) {
         res.status(500).json({

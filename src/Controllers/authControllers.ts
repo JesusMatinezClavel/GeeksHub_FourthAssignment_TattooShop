@@ -10,7 +10,6 @@ export const registration = async (req: Request, res: Response) => {
         const lastName = req.body.lastName.trim()
         const password = req.body.passwordHash.trim()
         const email = req.body.email.trim()
-        console.log(name, lastName, password, email)
 
         // Validamos que los datos obtenidos sean válidos
         if (!name || !lastName || !password || !email) {
@@ -119,18 +118,19 @@ export const login = async (req: Request, res: Response) => {
                 message: `The password: ${password} is incorrect!`
             })
         }
-
         // Creamos el token a través del package JsonWebToken y le vinculamos los valores del user.id(user?.id) con el role_id (user?.role)
         const token = jwt.sign({
             userID: user?.id,
-            roleID: user?.role
-        }, "secreto",
+            roleName: user?.role.rolename
+        },
+            process.env.JWT_secret as string,
             { expiresIn: '2h' })
 
         // Mostramos por response el usuario logeado y el token creado
         res.status(200).json({
             succes: true,
             message: `Logged in succesfully!`,
+            message2: console.log(user.role.rolename),
             data: user,
             token: token
         })

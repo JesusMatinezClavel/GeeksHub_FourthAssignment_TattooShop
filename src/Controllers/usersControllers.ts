@@ -12,6 +12,10 @@ export const getAllUsers = async (req: Request, res: Response) => {
                 lastName: true,
                 email: true,
                 passwordHash: true,
+                role: {
+                    id: true,
+                    rolename: true
+                }
             }
         })
         res.status(200).json(
@@ -35,7 +39,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getUserById = async (req: Request, res: Response) => {
     try {
         const userID = req.tokenData.userID
-        console.log(userID)
         const getAllUsers = await User.find({
             where: {
                 id: userID
