@@ -120,12 +120,14 @@ export const login = async (req: Request, res: Response) => {
             })
         }
 
+        // Creamos el token a través del package JsonWebToken y le vinculamos los valores del user.id(user?.id) con el role_id (user?.role)
         const token = jwt.sign({
             userID: user?.id,
             roleID: user?.role
         }, "secreto",
             { expiresIn: '2h' })
 
+        // Mostramos por response el usuario logeado y el token creado
         res.status(200).json({
             succes: true,
             message: `Logged in succesfully!`,
