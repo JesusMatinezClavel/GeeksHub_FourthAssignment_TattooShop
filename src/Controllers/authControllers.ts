@@ -1,9 +1,11 @@
-import bcrypt from "bcrypt";
+import bcrypt, { hash, hashSync } from "bcrypt";
+import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { User } from "../models/User";
 
 export const registration = async (req: Request, res: Response) => {
     try {
+        // Sacamos los valores a intrudocir desde el req.body
         const name = req.body.firstName.trim()
         const lastName = req.body.lastName.trim()
         const password = req.body.passwordHash.trim()
@@ -37,9 +39,10 @@ export const registration = async (req: Request, res: Response) => {
             )
         }
 
-
+        // Encriptamos la contraseña
         const encryptedPassword = bcrypt.hashSync(password, 8)
 
+        // Creamos el nuevo user con la contraseña encriptada
         const newUser = await User.create({
             firstName: name,
             lastName: lastName,
@@ -47,6 +50,7 @@ export const registration = async (req: Request, res: Response) => {
             email: email
         }).save()
 
+        // Mostramos el nuevo usuario creado por la response
         res.status(200).json({
             succes: true,
             message: `New user created: ${name} ${lastName}`,
@@ -65,9 +69,68 @@ export const registration = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     try {
+        // Sacamos los valores a intrudocir desde el req.body
+        const email = req.body.email.trim()
+        const password = req.body.password.trim()
+
+
+        // Validamos que los datos obtenidos sean válidos
+        if (!email || !password) {
+            return res.status(200).json({
+                succes: false,
+                message: `email or password invalid!`,
+            })
+        }
+
+        // Llamamos a un usuario a partir del email
+        const user = await User.findOne(
+            {
+                where: {
+                    email: email
+                },
+                relations: {
+                    role: true
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    passwordHash: true,
+                    role: {
+                        id: true,
+                        rolename: true
+                    }
+                }
+            }
+        );
+
+        // Confirmamos si el usuario existe
+        if (!user) {
+            res.status(400).json({
+                succes: false,
+                message: `The email: ${email} doesn't exist!`
+            })
+        }
+
+        // Validamos que la contraseña coincida
+        const isValidPassword = bcrypt.compareSync(password, user!.passwordHash)
+        if (!isValidPassword) {
+            res.status(400).json({
+                succes: false,
+                message: `The password: ${password} is incorrect!`
+            })
+        }
+
+        const token = jwt.sign({
+            userID: user?.id,
+            roleID: user?.role
+        }, "secreto",
+            { expiresIn: '2h' })
+
         res.status(200).json({
             succes: true,
             message: `Logged in succesfully!`,
+            data: user,
+            token: token
         })
     } catch (error) {
         res.status(500).json({

@@ -14,6 +14,7 @@ import { User } from "../models/User"
 import { Service } from "../models/Service"
 import { Appointment } from "../models/Appointment"
 import { AddDefaultRoleIDUsers1709319089041 } from "./migrations/fixes/1709319089041-add_default_roleID_users"
+import { ChangeColumnNameRoles1709322644950 } from "./migrations/fixes/1709322644950-change_column_name_roles"
 
 
 // Cambiamos los primeros valores de AppDataSource por los valores introducidos en .env
@@ -32,7 +33,8 @@ export const AppDataSource = new DataSource({
         Users1708975838186,
         Services1708977243636,
         Appointments1708976782137,
-        AddDefaultRoleIDUsers1709319089041
+        AddDefaultRoleIDUsers1709319089041,
+        ChangeColumnNameRoles1709322644950
     ],
     synchronize: false,
     logging: false

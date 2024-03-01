@@ -27,7 +27,7 @@ export const createRoles = async (req: Request, res: Response) => {
     const roleBody = req.body.role
     try {
         const roleIn = await Role.create({
-            name: roleBody
+            rolename: roleBody
         }).save()
         res.status(201).json(
             {

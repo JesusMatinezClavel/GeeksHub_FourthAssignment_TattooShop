@@ -20,7 +20,7 @@ export class User extends BaseEntity {
     @Column({ name: 'email' })
     email!: string
 
-    @Column({ name: 'password_hash' })
+    @Column({ name: 'password_hash', select: false })
     passwordHash!: string
 
     // Vinculamos el campo role_id de users a la tabla roles
