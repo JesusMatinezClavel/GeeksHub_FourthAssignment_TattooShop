@@ -20,8 +20,8 @@ export class User extends BaseEntity {
     @Column({ name: 'email' })
     email!: string
 
-    @Column({ name: 'password' })
-    password!: string
+    @Column({ name: 'password_hash' })
+    passwordHash!: string
 
     // Vinculamos el campo role_id de users a la tabla roles
     @ManyToOne(() => Role, (role) => role.users)
