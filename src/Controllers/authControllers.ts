@@ -105,7 +105,7 @@ export const login = async (req: Request, res: Response) => {
 
         // Confirmamos si el usuario existe
         if (!user) {
-            res.status(400).json({
+            return res.status(400).json({
                 succes: false,
                 message: `The email: ${email} doesn't exist!`
             })
@@ -114,7 +114,7 @@ export const login = async (req: Request, res: Response) => {
         // Validamos que la contraseña coincida
         const isValidPassword = bcrypt.compareSync(password, user!.passwordHash)
         if (!isValidPassword) {
-            res.status(400).json({
+            return res.status(400).json({
                 succes: false,
                 message: `The password: ${password} is incorrect!`
             })
