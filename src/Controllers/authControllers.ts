@@ -60,3 +60,20 @@ export const registration = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+
+export const login = async (req: Request, res: Response) => {
+    try {
+        res.status(200).json({
+            succes: true,
+            message: `Logged in succesfully!`,
+        })
+    } catch (error) {
+        res.status(500).json({
+            succes: false,
+            message: `User cannot be registered`,
+            error: error
+        })
+    }
+}

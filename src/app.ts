@@ -8,7 +8,7 @@ import 'dotenv/config'
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
 import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
 import { createUsers, deleteUsers, getUsers, updateUsers } from "./Controllers/usersControllers";
-import { registration } from "./Controllers/authControllers";
+import { login, registration } from "./Controllers/authControllers";
 
 // Creamos la constante App a partir de express
 export const app: Application = express()
@@ -29,6 +29,7 @@ app.get("/healthy", (req: Request, res: Response) => {
 //                               Auth routes
 
 app.post('/api/auth/register', registration)
+app.post('/api/auth/login', login)
 
 
 //                               Roles routes
