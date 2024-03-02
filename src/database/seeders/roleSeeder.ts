@@ -22,7 +22,7 @@ export const seederRoles = async () => {
 
 
         console.log(`---------------------------`);
-        console.log(`roles have been generated succesfully!`);
+        console.log(`Roles have been generated succesfully!`);
         console.log(`---------------------------`);
 
     } catch (error) {

@@ -1,17 +1,23 @@
+import { AppDataSource } from "../db";
 import { seederAppointments } from "./appointmentsSeeder";
 import { seederRoles } from "./roleSeeder";
 import { seederServices } from "./serviceSeeder";
 import { seederUsers } from "./userSeeder";
 
 const seedDB = async () => {
+    try {
 
-    // await seederRoles()
+        // await seederRoles()
 
-    // await seederUsers()
+        // await seederUsers()
 
-    // await seederServices()
+        // await seederServices()
 
-    await seederAppointments()
+        await seederAppointments()
+
+    } catch (error) {
+        console.log(error); 
+    }
 }
 
 

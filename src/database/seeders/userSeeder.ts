@@ -88,10 +88,10 @@ export const seederUsers = async () => {
         console.log(`---------------------------`);
 
         return users
-
+        
     } catch (error) {
         console.log(error)
     } finally {
-        await AppDataSource.destroy()
+        AppDataSource.destroy()
     }
 }
