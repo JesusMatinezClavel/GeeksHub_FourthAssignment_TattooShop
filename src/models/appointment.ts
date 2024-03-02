@@ -16,10 +16,10 @@ export class Appointment extends BaseEntity {
     // Vinculamos el campo user_id de appointments a la tabla users
     @ManyToOne(() => User, (user) => user.appointments)
     @JoinColumn({ name: 'user_id' })
-    user!: User
+    user!: User | number
 
     // Vinculamos el campo service_id de appointments a la tabla services
     @ManyToOne(() => Service, (service) => service.appointments)
-    @JoinColumn({ name: 'service_id' })
-    service!: Service
+    @JoinColumn({ name: 'service_id'})
+    service!: Service | number
 }

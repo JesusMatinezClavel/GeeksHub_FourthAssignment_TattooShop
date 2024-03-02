@@ -13,7 +13,7 @@ const startServer = () => {
     AppDataSource.initialize()
         // Si la base de datos está conectada nos avisará por el terminal del puerto
         .then(() => {
-            console.log(`database connected on port ${process.env.DB_port}`)
+            console.log(`database connected`)
             // Cuando la base de datos está encendida se inicia el servidor en el puerto asignado
             app.listen(PORT, () => {
                 console.log(`the server is up on port ${PORT}`)
