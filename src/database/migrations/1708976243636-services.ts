@@ -1,7 +1,7 @@
 // Creamos este .ts a través del terminal con typeorm migration:create
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class Services1708977243636 implements MigrationInterface {
+export class Services1708976243636 implements MigrationInterface {
     // Llamaremos a esta función con el script "run-migrations" para crear la tabla en cuestión.
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -25,28 +25,6 @@ export class Services1708977243636 implements MigrationInterface {
                         name: "description",
                         type: "text",
                         isNullable: false
-                //     },
-                //     {
-                //         name: "tattoo_id",
-                //         type: "int",
-                //     },
-                //     {
-                //         name: "piercing_id",
-                //         type: "int",
-                //     }
-                // ],
-                // foreignKeys: [
-                //     {
-                //         columnNames: ["tattoo_id"],
-                //         referencedTableName: "tattoo_catalogue",
-                //         referencedColumnNames: ["id"],
-                //         onDelete: "CASCADE"
-                //     },
-                //     {
-                //         columnNames: ["piercing_id"],
-                //         referencedTableName: "piercing_catalogue",
-                //         referencedColumnNames: ["id"],
-                //         onDelete: "CASCADE"
                     }
                 ],
             }),

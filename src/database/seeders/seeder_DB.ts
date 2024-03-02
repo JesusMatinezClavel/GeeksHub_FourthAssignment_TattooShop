@@ -3,11 +3,16 @@ import { seederRoles } from "./roleSeeder";
 import { seederServices } from "./serviceSeeder";
 import { seederUsers } from "./userSeeder";
 
-// seederRoles()
+const seedDB = async () => {
 
-// seederUsers()
+    // await seederRoles()
 
-// seederServices()
+    // await seederUsers()
 
-seederAppointments()
+    // await seederServices()
 
+    await seederAppointments()
+}
+
+
+seedDB()

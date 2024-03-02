@@ -32,6 +32,10 @@ export const seederServices = async () => {
         Service5.description = `Además de nuestros servicios de aplicación, ofrecemos una selección de piercings y otros artículos relacionados con el arte corporal. Nuestra tienda proporciona a los clientes la oportunidad de adquirir productos de alta calidad que complementan su estilo único. Desde joyería especializada hasta productos de cuidado posterior, nos esforzamos por ofrecer una gama diversa de artículos para satisfacer las necesidades y preferencias de nuestros clientes, tanto durante como después del proceso de modificación corporal.`
         await Service5.save()
 
+        console.log(`---------------------------`);
+        console.log(`Test services have been generated succesfully!`);
+        console.log(`---------------------------`);
+
     } catch (error) {
         console.log(error)
     } finally {
