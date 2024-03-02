@@ -81,9 +81,11 @@ export const seederAppointments = async () => {
         await AppDataSource.initialize()
 
 
-        const appointments = Array.from({ length: 17 }, generateUsers)
+        const appointments = Array.from({ length: 2 }, generateUsers)
+        console.log(appointments);
+        
 
-        await Appointment.save(appointments)
+        // await Appointment.save(appointments)
 
         console.log(`---------------------------`);
         console.log(`test users have been generated succesfully!`);
