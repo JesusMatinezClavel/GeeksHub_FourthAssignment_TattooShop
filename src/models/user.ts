@@ -26,9 +26,9 @@ export class User extends BaseEntity {
     // Vinculamos el campo role_id de users a la tabla roles
     @ManyToOne(() => Role, (role) => role.users)
     @JoinColumn({ name: 'role_id' })
-    role!: Role  
+    role!: Role
 
     // Vinculamos users a appointments aunque no tenga una Foreign Key apuntando a appointments.
     @OneToMany(() => Appointment, (appointment) => appointment.user)
-    appointments!: Appointment[]
+    appointments!: Appointment
 }

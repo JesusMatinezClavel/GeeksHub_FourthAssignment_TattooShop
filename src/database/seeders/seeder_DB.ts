@@ -1,24 +1,30 @@
 import { AppDataSource } from "../db";
-import { seederAppointments } from "./appointmentsSeeder";
+import { generateAppointment, seederAppointments } from "./appointmentsSeeder";
 import { seederRoles } from "./roleSeeder";
 import { seederServices } from "./serviceSeeder";
-import { seederUsers } from "./userSeeder";
+import { generateControlUsers, seederUsers } from "./userSeeder";
 
 const seedDB = async () => {
-    try {
 
-        // await seederRoles()
+        await AppDataSource.initialize()
+            .then(() => seederRoles())
 
-        // await seederUsers()
+            .then(() => seederServices())
 
-        // await seederServices()
+            .then(()=> generateControlUsers())
 
-        await seederAppointments()
+            .then(() => seederUsers())
 
-    } catch (error) {
-        console.log(error); 
-    }
+            .then(() => seederAppointments())
+
+            .catch((error) => {
+                console.log(error)
+            })
+            .finally(() => {
+                AppDataSource.destroy()
+            })
 }
+
 
 
 seedDB()
