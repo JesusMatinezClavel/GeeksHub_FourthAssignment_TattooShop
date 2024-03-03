@@ -37,7 +37,9 @@ app.post('/api/auth/login', login)
 //                               Users routes
 // Endpoint para llamar a todos los usuarios (solo para super_admins)
 app.get('/api/users', auth, isSuperAdmin, getUsers)
-app.get('/api/users?email=', auth, isSuperAdmin, getUsers)
+// Endpoint para llamar a un usuario a partir de su email (solo para super_admins)
+app.get('/api/users?email=ejemplo@ejemplo.com', auth, isSuperAdmin, getUsers)
+// Endpoint para llamar a tu propio perfil
 app.get('/api/users/profile', auth, getOwnProfile)
 app.put('/api/users/profile', auth, updateOwnProfile)
 

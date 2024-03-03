@@ -8,14 +8,13 @@ export const getUsers = async (req: Request, res: Response) => {
     try {
         // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
         const email = req.query.email
-        console.log(email);
-        
         if (email) {
             const getUserByEmail = await User.findOne({
-                // Filtramos por nuestro propio id
+                // Filtramos por el email situado en req.query
                 where: {
                     email: email.toString()
                 },
+                // Vinculamos el role_id a la clase role
                 relations: {
                     role: true
                 },
@@ -32,8 +31,6 @@ export const getUsers = async (req: Request, res: Response) => {
                     }
                 }
             })
-            console.log(getUserByEmail);
-            
             res.status(200).json(
                 {
                     succes: true,
@@ -43,29 +40,31 @@ export const getUsers = async (req: Request, res: Response) => {
             )
         }
         else {
-           // Llamamos a todos los usuarios
-        const getAllUsers = await User.find({
-            relations: {
-                role: true
-            },
-            select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-                passwordHash: true,
-                role: {
-                    rolename: true
+            // Llamamos a todos los usuarios
+            const getAllUsers = await User.find({
+                // Vinculamos el role_id a la clase role
+                relations: {
+                    role: true
+                },
+                // Seleccionamos los datos a mostrar
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    passwordHash: true,
+                    role: {
+                        rolename: true
+                    }
                 }
-            }
-        })
-        res.status(200).json(
-            {
-                succes: true,
-                message: 'users called succesfully',
-                data: getAllUsers
-            }
-        )
+            })
+            res.status(200).json(
+                {
+                    succes: true,
+                    message: 'users called succesfully',
+                    data: getAllUsers
+                }
+            )
         }
     } catch (error) {
         res.status(500).json(
