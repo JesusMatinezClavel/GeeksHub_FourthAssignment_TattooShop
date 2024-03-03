@@ -1,4 +1,5 @@
 import { User } from "../../models/User"
+import bcrypt from "bcrypt";
 import { faker } from "@faker-js/faker";
 import { Role } from "../../models/Role";
 
@@ -10,7 +11,7 @@ const generateUsers = () => {
     // Utilizamos el first_name y last_name del user para hacer un email relacionado
     randomUser.email = faker.internet.email({ firstName, lastName })
     // Generamos una contraseña de 8 letras fáciles de recordar
-    randomUser.passwordHash = faker.internet.password({ length: 8, memorable: true })
+    randomUser.passwordHash = bcrypt.hashSync(faker.internet.password({ length: 8, memorable: true }), 8)
 
     return randomUser
 }
@@ -23,7 +24,7 @@ export const generateControlUsers = async () => {
     newUser.firstName = 'user'
     newUser.lastName = 'test'
     newUser.email = 'user@user.com'
-    newUser.passwordHash = 'password'
+    newUser.passwordHash = bcrypt.hashSync('password', 8)
     newUser.role = {
         id: 1
     } as Role // <-------- Tenemos que indicarle que este valor hace referencia al Role de la entidad User
@@ -34,7 +35,7 @@ export const generateControlUsers = async () => {
     newAdmin.firstName = 'admin'
     newAdmin.lastName = 'test'
     newAdmin.email = 'admin@admin.com'
-    newAdmin.passwordHash = 'password'
+    newAdmin.passwordHash = bcrypt.hashSync('password', 8)
     newAdmin.role = {
         id: 2
     } as Role // <-------- Tenemos que indicarle que este valor hace referencia al Role de la entidad User
@@ -45,7 +46,7 @@ export const generateControlUsers = async () => {
     newSuperAdmin.firstName = 'super_admin'
     newSuperAdmin.lastName = 'test'
     newSuperAdmin.email = 'super_admin@super_admin.com'
-    newSuperAdmin.passwordHash = 'password'
+    newSuperAdmin.passwordHash = bcrypt.hashSync('password', 8)
     newSuperAdmin.role = {
         id: 3
     } as Role // <-------- Tenemos que indicarle que este valor hace referencia al Role de la entidad User
