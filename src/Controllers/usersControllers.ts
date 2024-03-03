@@ -1,6 +1,8 @@
 // Importamos las interfaces Request y Response para poder comunicarnos con el servidor
 import { Request, Response } from "express";
 import { User } from "../models/User";
+import { FindOperator, Like } from "typeorm";
+import bcrypt from "bcrypt";
 
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -88,17 +90,71 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
                 id: userID
             }
         })
-        console.log(getOwnUser);
-                
-        const updateOwnUser = await User.update({id: getOwnUser?.id},{lastName: req.body.lastName},)
-        console.log(updateOwnUser);
-        
+
+        const firstName = () => {
+            let update
+            if (req.body.firstName !== "" && req.body.firstName !== getOwnUser?.firstName) {
+                console.log(`First name updated to: ${req.body.firstName}`);
+                update = req.body.firstName
+            } else {
+                update = getOwnUser?.firstName
+            }
+            return update
+        }
+        const lastName = () => {
+            let update
+            if (req.body.lastName !== "") {
+                console.log(`Last name updated to: ${req.body.lastName}`);
+                update = req.body.lastName
+            } else {
+                update = getOwnUser?.lastName
+            }
+            return update
+        }
+        const email = () => {
+            let update
+            if (req.body.email !== "") {
+                console.log(`Email updated to: ${req.body.email}`);
+                update = req.body.email
+            } else {
+                update = getOwnUser?.email
+            }
+            return update
+        }
+        const password = () => {
+            let update
+            if (req.body.password !== "") {
+                console.log(`Password updated to: ${req.body.password}`);
+                update = req.body.password
+            } else {
+                update = getOwnUser?.passwordHash
+            }
+            return update
+        }
+
+
+        await User.update({ id: getOwnUser?.id }, {
+                firstName: firstName(),
+                lastName: lastName(),
+                email: email(),
+                passwordHash: password()
+        },
+        )
+
+        const getUpdatedUser = await User.findOne({
+            where: {
+                id: userID
+            }
+        })
+
+
 
         res.status(200).json(
             {
                 succes: true,
-                message: 'user called succesfully',
-                data: updateOwnUser
+                message: 'user updated succesfully',
+                data: getOwnUser,
+                data2: getUpdatedUser
             }
         )
     } catch (error) {
