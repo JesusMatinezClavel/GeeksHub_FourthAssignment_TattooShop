@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
 import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
-import { createUsers, deleteUsers, getAllUsers, getOwnProfile, updateOwnProfile, updateUsers } from "./Controllers/usersControllers";
+import { createUsers, deleteUsers, getOwnProfile, getUsers, updateOwnProfile, updateUsers } from "./Controllers/usersControllers";
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
@@ -36,7 +36,8 @@ app.post('/api/auth/login', login)
 
 //                               Users routes
 // Endpoint para llamar a todos los usuarios (solo para super_admins)
-app.get('/api/users', auth, isSuperAdmin, getAllUsers)
+app.get('/api/users', auth, isSuperAdmin, getUsers)
+app.get('/api/users?email=', auth, isSuperAdmin, getUsers)
 app.get('/api/users/profile', auth, getOwnProfile)
 app.put('/api/users/profile', auth, updateOwnProfile)
 

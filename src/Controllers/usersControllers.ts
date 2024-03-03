@@ -4,10 +4,46 @@ import { User } from "../models/User";
 import { FindOperator, Like } from "typeorm";
 import bcrypt from "bcrypt";
 
-// Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) => {
     try {
-        // Llamamos a todos los usuarios
+        // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
+        const email = req.query.email
+        console.log(email);
+        
+        if (email) {
+            const getUserByEmail = await User.findOne({
+                // Filtramos por nuestro propio id
+                where: {
+                    email: email.toString()
+                },
+                relations: {
+                    role: true
+                },
+                // Seleccionamos los datos a mostrar
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    email: true,
+                    passwordHash: true,
+                    role: {
+                        id: true,
+                        rolename: true
+                    }
+                }
+            })
+            console.log(getUserByEmail);
+            
+            res.status(200).json(
+                {
+                    succes: true,
+                    message: 'user with email tal called succesfully',
+                    data: getUserByEmail,
+                }
+            )
+        }
+        else {
+           // Llamamos a todos los usuarios
         const getAllUsers = await User.find({
             relations: {
                 role: true
@@ -30,8 +66,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
                 data: getAllUsers
             }
         )
+        }
     } catch (error) {
-
         res.status(500).json(
             {
                 succes: true,
@@ -84,6 +120,7 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
     try {
         // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
         const userID = req.tokenData.userID
+        // Llamamos a nuestro usuario sin actualizar
         const getOwnUser = await User.findOne({
             // Filtramos por nuestro propio id
             where: {
@@ -91,6 +128,7 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
             }
         })
 
+        // Creamos una función propiedad a actualizar para que solo los actualice si hay valores nuevos
         const firstName = () => {
             let update
             if (req.body.firstName !== "" && req.body.firstName !== getOwnUser?.firstName) {
@@ -132,29 +170,19 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
             return update
         }
 
-
+        // Actualizamos las propiedades de nuestro perfil solo cuando hayamos introducido nueva información
         await User.update({ id: getOwnUser?.id }, {
-                firstName: firstName(),
-                lastName: lastName(),
-                email: email(),
-                passwordHash: password()
+            firstName: firstName(),
+            lastName: lastName(),
+            email: email(),
+            passwordHash: bcrypt.hashSync(password(), 8)
         },
         )
-
-        const getUpdatedUser = await User.findOne({
-            where: {
-                id: userID
-            }
-        })
-
-
-
         res.status(200).json(
             {
                 succes: true,
                 message: 'user updated succesfully',
-                data: getOwnUser,
-                data2: getUpdatedUser
+                data: getOwnUser
             }
         )
     } catch (error) {
@@ -167,8 +195,6 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
     }
 }
 
-
-
 export const createUsers = (req: Request, res: Response) => {
     res.status(200).json(
         {
@@ -178,6 +204,7 @@ export const createUsers = (req: Request, res: Response) => {
         }
     )
 }
+
 export const updateUsers = (req: Request, res: Response) => {
     res.status(200).json(
         {
@@ -186,6 +213,7 @@ export const updateUsers = (req: Request, res: Response) => {
         }
     )
 }
+
 export const deleteUsers = (req: Request, res: Response) => {
     res.status(200).json(
         {
