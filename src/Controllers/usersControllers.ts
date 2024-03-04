@@ -52,7 +52,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
             const skip = (page - 1) * limit
             const lengUsers = await User.find()
 
-            if (limit <= 0 || page <= 0) {
+            if (limit <= 0 || page <= 0||!Number.isInteger(limit)||!Number.isInteger(page)) {
                 return res.status(400).json({
                     succes: false,
                     message: `Limit or page selected are not valid`
@@ -147,13 +147,39 @@ export const getOwnProfile = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteUsers = (req: Request, res: Response) => {
+export const deleteUsers = async (req: Request, res: Response) => {
     try {
+        const userID = parseInt(req.params.id)
+        if (userID <= 0 || !Number.isInteger(userID) || isNaN(userID)) {
+            return res.status(500).json(
+                {
+                    succes: false,
+                    message: 'ID not valid'
+                }
+            )
+        }
+
+        const user = await User.findOne({
+            where: {
+                id: userID
+            }
+        })
+        if(!user){
+            return res.status(400).json(
+                {
+                    succes: true,
+                    message: `User: ${userID} doesn't exist`
+                }
+            )
+        }
+
+        await User.delete(userID)
+
 
         res.status(200).json(
             {
                 succes: true,
-                message: 'users deleted succesfully'
+                message: `User: ${userID} has been deleted!`
             }
         )
     } catch (error) {
