@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
 import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
-import { deleteUsers, getOwnProfile, getUsers, updateOwnProfile, updateUsers } from "./Controllers/usersControllers";
+import { deleteUsers, getOwnProfile, getUsers, updateOwnProfile} from "./Controllers/usersControllers";
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
@@ -43,10 +43,10 @@ app.get('/api/users?email=ejemplo@ejemplo.com', auth, isSuperAdmin, getUsers)
 app.get('/api/users/profile', auth, getOwnProfile)
 // Endpoint para actualizar cualquier valor de tu perfil (excepto el role)
 app.put('/api/users/profile', auth, updateOwnProfile)
-// Endpoint para actualizar cualquier valor de tu perfil (excepto el role)
-app.put('/api/users/:id/role', auth, isSuperAdmin) //                                                   TO DO
+// Endpoint para actualizar el role de cualquier usuario (solo para super_admins)
+app.put('/api/users/:id/role', auth, isSuperAdmin, updateRoles)
 // Endpoint para eliminar un usuario (solo para super_admins)
-app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers) //                                                   TO DO
+app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers)
 
 //                               Roles routes
 app.get('/roles', getRoles)

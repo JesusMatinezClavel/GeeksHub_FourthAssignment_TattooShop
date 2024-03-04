@@ -2,7 +2,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
-import { Entity, getRepository } from "typeorm";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -237,7 +236,7 @@ export const deleteUsers = async (req: Request, res: Response) => {
             }
         })
 
-        if(!user){
+        if (!user) {
             return res.status(400).json({
                 succes: false,
                 message: `User ${userID} doesn't exist`
@@ -262,11 +261,22 @@ export const deleteUsers = async (req: Request, res: Response) => {
     }
 }
 
-export const updateUsers = (req: Request, res: Response) => {
-    res.status(200).json(
-        {
-            succes: true,
-            message: 'users updated succesfully'
-        }
-    )
+export const updateRoles = (req: Request, res: Response) => {
+    try {
+
+        res.status(200).json(
+            {
+                succes: true,
+                message: 'users updated succesfully'
+            }
+        )
+    } catch (error) {
+
+        res.status(500).json(
+            {
+                succes: false,
+                message: 'Roles updating failed'
+            }
+        )
+    }
 }
