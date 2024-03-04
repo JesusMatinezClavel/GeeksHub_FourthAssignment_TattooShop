@@ -1,8 +1,8 @@
 // Importamos las interfaces Request y Response para poder comunicarnos con el servidor
 import { Request, Response } from "express";
 import { User } from "../models/User";
-import { FindOperator, Like } from "typeorm";
 import bcrypt from "bcrypt";
+import { Entity, getRepository } from "typeorm";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -40,6 +40,29 @@ export const getUsers = async (req: Request, res: Response) => {
             )
         }
         else {
+            let limit = Number(req.query.limit) || 5
+            const page = Number(req.query.page) || 1
+            const skip = (page - 1) * limit
+
+            const allUsers = await User.find()
+            if (isNaN(limit) || isNaN(page)) {
+                return res.status(400).json({
+                    succes: false,
+                    message: `Limit or page selected not valid`
+                })
+            }
+
+            if (limit > 20) {
+                limit = 20
+            }
+
+            if (skip >= allUsers.length) {
+                return res.status(400).json({
+                    succes: false,
+                    message: `No more users to call`
+                })
+            }
+
             // Llamamos a todos los usuarios
             const getAllUsers = await User.find({
                 // Vinculamos el role_id a la clase role
@@ -56,7 +79,10 @@ export const getUsers = async (req: Request, res: Response) => {
                     role: {
                         rolename: true
                     }
-                }
+                },
+                take: limit,
+                skip: skip
+
             })
             res.status(200).json(
                 {
@@ -194,25 +220,46 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteUsers = (req: Request, res: Response) => {
-try {
-    
-        
-    res.status(200).json(
-        {
-            succes: true,
-            message: 'users deleted succesfully'
+export const deleteUsers = async (req: Request, res: Response) => {
+    try {
+        const userID = parseInt(req.params.id)
+
+        if (isNaN(userID) || userID <= 0) {
+            return res.status(400).json({
+                succes: false,
+                message: `ID selected is not valid`
+            })
         }
-    )
-} catch (error) {
-    
-    res.status(500).json(
-        {
-            succes: false,
-            message: 'failed delete users'
+
+        const user = await User.findOne({
+            where: {
+                id: userID
+            }
+        })
+
+        if(!user){
+            return res.status(400).json({
+                succes: false,
+                message: `User ${userID} doesn't exist`
+            })
         }
-    )
-}
+        await User.delete(userID)
+
+        res.status(200).json(
+            {
+                succes: true,
+                message: `user ${userID} has been deleted`
+            }
+        )
+    } catch (error) {
+
+        res.status(500).json(
+            {
+                succes: false,
+                message: 'failed delete users'
+            }
+        )
+    }
 }
 
 export const updateUsers = (req: Request, res: Response) => {
