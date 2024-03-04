@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
 import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
-import { createUsers, deleteUsers, getOwnProfile, getUsers, updateOwnProfile, updateUsers } from "./Controllers/usersControllers";
+import { deleteUsers, getOwnProfile, getUsers, updateOwnProfile, updateUsers } from "./Controllers/usersControllers";
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
@@ -26,27 +26,27 @@ app.get("/healthy", (req: Request, res: Response) => {
     })
 })
 
-// Creamos las rutas para las distintas tablas importando las funciones desde la carpeta ./src/Controllers
+// Creamos los endpoints con las distintas rutas, middlewares y controllers necesarios
 
-//                               Auth routes
+//                                            Auth routes
 // Endpoint para registrar usuarios
 app.post('/api/auth/register', registration)
 // Endpoint para logearse
 app.post('/api/auth/login', login)
 
-//                               Users routes
+//                                                                           Users routes
 // Endpoint para llamar a todos los usuarios (solo para super_admins)
 app.get('/api/users', auth, isSuperAdmin, getUsers)
 // Endpoint para llamar a un usuario a partir de su email (solo para super_admins)
 app.get('/api/users?email=ejemplo@ejemplo.com', auth, isSuperAdmin, getUsers)
 // Endpoint para llamar a tu propio perfil
 app.get('/api/users/profile', auth, getOwnProfile)
+// Endpoint para actualizar cualquier valor de tu perfil (excepto el role)
 app.put('/api/users/profile', auth, updateOwnProfile)
-
-
-app.get('/users', createUsers)
-app.put('/users', updateUsers)
-app.delete('/users', deleteUsers)
+// Endpoint para actualizar cualquier valor de tu perfil (excepto el role)
+app.put('/api/users/:id/role', auth, isSuperAdmin) //                                                   TO DO
+// Endpoint para eliminar un usuario (solo para super_admins)
+app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers) //                                                   TO DO
 
 //                               Roles routes
 app.get('/roles', getRoles)

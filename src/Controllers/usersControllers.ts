@@ -194,14 +194,25 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
     }
 }
 
-export const createUsers = (req: Request, res: Response) => {
+export const deleteUsers = (req: Request, res: Response) => {
+try {
+    
+        
     res.status(200).json(
         {
             succes: true,
-            message: req.query
-
+            message: 'users deleted succesfully'
         }
     )
+} catch (error) {
+    
+    res.status(500).json(
+        {
+            succes: false,
+            message: 'failed delete users'
+        }
+    )
+}
 }
 
 export const updateUsers = (req: Request, res: Response) => {
@@ -209,15 +220,6 @@ export const updateUsers = (req: Request, res: Response) => {
         {
             succes: true,
             message: 'users updated succesfully'
-        }
-    )
-}
-
-export const deleteUsers = (req: Request, res: Response) => {
-    res.status(200).json(
-        {
-            succes: true,
-            message: 'users deleted succesfully'
         }
     )
 }
