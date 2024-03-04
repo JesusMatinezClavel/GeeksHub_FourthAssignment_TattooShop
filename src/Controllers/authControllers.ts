@@ -71,7 +71,6 @@ export const login = async (req: Request, res: Response) => {
         // Sacamos los valores a intrudocir desde el req.body
         const email = req.body.email.trim()
         const password = req.body.password.trim()
-        
 
 
         // Validamos que los datos obtenidos sean válidos
@@ -111,9 +110,8 @@ export const login = async (req: Request, res: Response) => {
             })
         }
 
-        // Validamos que la contraseña coincida      
-        const isValidPassword = bcrypt.compareSync(password, user.passwordHash)
-        
+        // Validamos que la contraseña coincida
+        const isValidPassword = bcrypt.compareSync(password, user!.passwordHash)
         if (!isValidPassword) {
             return res.status(400).json({
                 succes: false,
@@ -133,6 +131,7 @@ export const login = async (req: Request, res: Response) => {
         res.status(200).json({
             succes: true,
             message: `Logged in succesfully!`,
+            message2: console.log(user.role.rolename),
             data: user,
             token: token
         })
