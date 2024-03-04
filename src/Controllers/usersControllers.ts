@@ -98,6 +98,53 @@ export const getUserById = async (req: Request, res: Response) => {
         )
     }
 }
+
+
+export const getOwnProfile = async (req: Request, res: Response) => {
+    try {
+        // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
+        const userID = req.tokenData.userID
+        const getAllUsers = await User.findOne({
+            // Filtramos por nuestro propio id
+            where: {
+                id: userID
+            },
+            relations: {
+                role: true
+            },
+            // Seleccionamos los datos a mostrar
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                passwordHash: true,
+                role: {
+                    id: true,
+                    rolename: true
+                }
+            }
+        })
+        res.status(200).json(
+            {
+                succes: true,
+                message: 'user called succesfully',
+                data: getAllUsers
+            }
+        )
+    } catch (error) {
+        res.status(500).json(
+            {
+                succes: true,
+                message: 'fatal error!'
+            }
+        )
+    }
+}
+
+
+
+
 export const createUsers = (req: Request, res: Response) => {
     res.status(200).json(
         {
