@@ -8,7 +8,8 @@ export const createAppointment = async (req: Request, res: Response) => {
 
         const service = req.body.service
         const id = req.tokenData.userID
-        const date = req.body.date
+        const date = new Date(req.body.date)
+        const currentDate = new Date()       
 
         if (!service || !date) {
             return res.status(400).json({
@@ -16,8 +17,15 @@ export const createAppointment = async (req: Request, res: Response) => {
                 message: `Service or date invalid!`
             })
         }
+        if (date < currentDate){
+            return res.status(400).json({
+                success: false,
+                message: `${date} is not a valid date!`
+            })
+        }
 
-        const newAppointment = new Appointment()
+
+            const newAppointment = new Appointment()
         newAppointment.appointmentDate = new Date(date)
         newAppointment.user = {
             id: id
@@ -27,7 +35,6 @@ export const createAppointment = async (req: Request, res: Response) => {
         } as Service
         await newAppointment.save()
 
-        console.log(newAppointment);
 
         res.status(200).json({
             success: true,
