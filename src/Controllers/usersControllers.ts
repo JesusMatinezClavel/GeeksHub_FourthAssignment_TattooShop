@@ -285,13 +285,12 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
     }
 }
 
-
 export const updateRoles = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id)
         const role = req.body.id
 
-        if (id === null || role === null || isNaN(id) || isNaN(role) || id <= 0 || role <= 0 || Number.isInteger(id) || Number.isInteger(role)) {
+        if (id === null || role === null || isNaN(id) || isNaN(role) || id <= 0 || role <= 0 || !Number.isInteger(id) || !Number.isInteger(role)) {
             return res.status(200).json(
                 {
                     succes: false,

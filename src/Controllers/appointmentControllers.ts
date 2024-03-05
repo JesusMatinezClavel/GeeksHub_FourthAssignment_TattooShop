@@ -32,7 +32,7 @@ export const createAppointment = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: `Mew appointment created!`,
-            // data: newAppointment
+            data: newAppointment
         })
     } catch (error) {
         res.status(500).json({
@@ -96,7 +96,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: `appointment updated!`,
-            data: appointmentID
+            data: newAppointment
         })
     } catch (error) {
         res.status(500).json({
@@ -117,6 +117,15 @@ export const getAppointments = async (req: Request, res: Response) => {
                     id: tokenId
                 }
             },
+            relations: {
+                service: true
+            },
+            select: {
+                appointmentDate: true,
+                service: {
+                    serviceName: true
+                }
+            }
         })
 
         res.status(200).json({
@@ -133,17 +142,16 @@ export const getAppointments = async (req: Request, res: Response) => {
     }
 }
 
-
 export const getAppointmentsById = async (req: Request, res: Response) => {
     try {
         const appointmentID = Number(req.params.id)
         const tokenId = req.tokenData.userID
         console.log(req.params.id);
-        
 
 
 
-        if (isNaN(appointmentID)||req.params.id === null) {
+
+        if (isNaN(appointmentID) || req.params.id === null) {
             return res.status(400).json({
                 success: false,
                 message: `Appointment ID is not valid!`
