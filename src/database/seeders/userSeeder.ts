@@ -1,13 +1,14 @@
 import { User } from "../../models/User"
 import { faker } from "@faker-js/faker";
 import { Role } from "../../models/Role";
+import bcrypt from "bcrypt";
 
 const generateUsers = () => {
     const randomUser = new User()
     const firstName = randomUser.firstName = faker.person.firstName()
     const lastName = randomUser.lastName = faker.person.lastName()
     randomUser.email = faker.internet.email({ firstName, lastName })
-    randomUser.passwordHash = faker.internet.password({ length: 8, memorable: true })
+    randomUser.passwordHash = bcrypt.hashSync(faker.internet.password({ length: 8, memorable: true }),8)
 
     return randomUser
 }
@@ -17,7 +18,7 @@ export const generateControlUsers = async () => {
     newUser.firstName = 'user'
     newUser.lastName = 'test'
     newUser.email = 'user@user.com'
-    newUser.passwordHash = 'password'
+    newUser.passwordHash = bcrypt.hashSync('password',8)
 
     
     newUser.role = {
@@ -29,7 +30,7 @@ export const generateControlUsers = async () => {
     newAdmin.firstName = 'admin'
     newAdmin.lastName = 'test'
     newAdmin.email = 'admin@admin.com'
-    newAdmin.passwordHash = 'password'
+    newAdmin.passwordHash = bcrypt.hashSync('password',8)
 
     
     newAdmin.role = {
@@ -41,7 +42,7 @@ export const generateControlUsers = async () => {
     newSuperAdmin.firstName = 'super_admin'
     newSuperAdmin.lastName = 'test'
     newSuperAdmin.email = 'super_admin@super_admin.com'
-    newSuperAdmin.passwordHash = 'password'
+    newSuperAdmin.passwordHash = bcrypt.hashSync('password',8)
 
     
     newSuperAdmin.role = {
