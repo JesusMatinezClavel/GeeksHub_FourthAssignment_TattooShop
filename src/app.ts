@@ -12,7 +12,7 @@ import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
 import { createAppointment, getAppointments, getAppointmentsById, updateAppointment } from "./Controllers/appointmentControllers";
-import { createNewService, getAllServices } from "./Controllers/serviceControllers";
+import { createNewService, deleteService, getAllServices, updateService } from "./Controllers/serviceControllers";
 
 // Creamos la constante App a partir de express
 export const app: Application = express()
@@ -60,3 +60,5 @@ app.get('/api/appointments/:id', auth, getAppointmentsById)
 //                               Services routes
 app.get('/api/services', auth, getAllServices)
 app.post('/api/services', auth, isSuperAdmin, createNewService)
+app.put('/api/services/:id', auth, isSuperAdmin, updateService)
+app.delete('/api/services/:id', auth, isSuperAdmin, deleteService)

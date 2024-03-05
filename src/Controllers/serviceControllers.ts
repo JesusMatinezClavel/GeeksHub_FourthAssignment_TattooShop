@@ -92,4 +92,80 @@ export const createNewService = async (req: Request, res: Response) => {
     }
 }
 
+export const updateService = async (req: Request, res: Response) => {
+    try {
+        const serviceID = req.params.id
+        let name = req.body.serviceName.trim()
+        let description = req.body.description.trim()
+        
+        
+        const service = await Service.findOne({
+            where: {
+                id: Number(serviceID)
+            }
+        })
 
+        if (name === ""){
+            name = service?.serviceName
+        }
+        if (description === ""){
+            description = service?.description
+        }
+        if(!service){
+            res.status(400).json({
+                success: false,
+                message: `Service doesn't exist!`,
+            })
+        }
+        if (!serviceID || !name || !description) {
+            return res.status(400).json({
+                success: false,
+                message: `name or description not valid!`,
+            })
+        }
+
+        await Service.update(
+            {
+                id: Number(serviceID)
+            },
+            {
+                serviceName: name,
+                description: description
+            }
+        )
+       
+        const serviceUpdated = await Service.findOne({
+            where: {
+                id: Number(serviceID)
+            }
+        })
+
+        res.status(200).json({
+            success: true,
+            message: `Service updated!`,
+            service: serviceUpdated
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: `Cannot update the service`,
+            error: error
+        })
+    }
+}
+
+export const deleteService = async (req: Request, res: Response) => {
+    try {
+
+        res.status(200).json({
+            success: true,
+            message: `Service deleted!`,
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: `Cannot delete the service`,
+            error: error
+        })
+    }
+}
