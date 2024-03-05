@@ -1,12 +1,11 @@
-# Welcome to my Backend App
+# Welcome to my Backend App📢
 
 <details>
   <summary>Content 📝</summary>
   <ol>
     <li><a href="#objective">Objective</a></li>
     <li><a href="#about-the-project">About the project</a></li>
-    <li><a href="#deploy-🚀">Deploy</a></li>
-    <li><a href="#stack">Stack</a></li>
+    <li><a href="#stack">Technologies used</a></li>
     <li><a href="#diagram-bd">Diagram</a></li>
     <li><a href="#Local-installation">Installation</a></li>
     <li><a href="#endpoints">Endpoints</a></li>
@@ -15,20 +14,13 @@
   </ol>
 </details>
 
-## Objective
+## Objective 🎯
 My objective for this project was to create a functional API conected to a data base with some relations @ManyToOne
 
-## About the project
+## About the project📑
 This aplication has been created as an assignment for the GeeksHub's FullStackDeveloper bootcamp with the objective of developing the structure needed for the backend of a Tattoo studio's website. This API allows anyone to register in the website and check the services in it, aside from creating, updating or deleting appointments. It also allows the user with Super_admin role to delete or call users and to create, update or delete any service needed.  
 
-## Deploy 🚀
-
-<div align="center">
-    🚀<a href="https://jesusmatinezclavel.github.io/GeeksHub_FourthAssignment_TattooShop/"><strong>Production's Url</strong></a>🚀
-</div>
-
-## Stack
-Tecnologías utilizadas:
+## Technologies used 💻
 <div align="center">
 <a href="https://www.expressjs.com/">
     <img src= "https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB"/>
@@ -53,10 +45,10 @@ Tecnologías utilizadas:
 </a>
  </div>
 
-## DB Diagram
+## DB Diagram📉
 ![Diagram for the first tables created](./img/Diagram_Tables.png)
 
-## Local installation
+## Local installation🔨
 1. Clone the repository:
 
     `$ git clone https://github.com/JesusMatinezClavel/GeeksHub_FourthAssignment_TattooShop/tree/develop`
@@ -96,7 +88,7 @@ Tecnologías utilizadas:
     ` $ Ejecutamos los seeders `
 
 
-## Endpoints
+## Endpoints🚩
 <details>
 <summary>Endpoints</summary>
 
@@ -240,7 +232,7 @@ Tecnologías utilizadas:
 
 </details>
 
-## Contributions
+## Contributions🤘
 Sugestions are always welcomed!
 
 You can do it both ways:
@@ -261,7 +253,7 @@ You can do it both ways:
         ```
     - Open a Pull Request
 
-## Contact:
+## Contact📧
 <a href = "mailto:jmcvalles@gmail.com"><img src="https://img.shields.io/badge/Gmail-C6362C?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
 <a href="https://www.linkedin.com/in/jes%C3%BAs-mart%C3%ADnez-clavel-vall%C3%A9s-913294108?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BtQmk%2FVrTShiKcofYcK6uYg%3D%3D" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 </p>
