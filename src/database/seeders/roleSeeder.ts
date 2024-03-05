@@ -2,7 +2,7 @@ import { Role } from "../../models/Role"
 
 
 
-
+// Creamos los 3 roles básicos
 export const seederRoles = async () => {
 
     const roleUser = new Role()

@@ -11,7 +11,6 @@
     <li><a href="#Local-installation">Installation</a></li>
     <li><a href="#endpoints">Endpoints</a></li>
     <li><a href="#contribuciones">Contribuciones</a></li>
-    <li><a href="#webgrafia">Webgrafia</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
@@ -25,7 +24,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 ## Deploy 🚀
 
 <div align="center">
-    <a href="https://jesusmatinezclavel.github.io/GeeksHub_FourthAssignment_TattooShop/"><strong>Production's Url</strong></a>🚀🚀🚀
+    🚀<a href="https://jesusmatinezclavel.github.io/GeeksHub_FourthAssignment_TattooShop/"><strong>Production's Url</strong></a>🚀
 </div>
 
 ## Stack
@@ -50,7 +49,7 @@ Tecnologías utilizadas:
     <img src= "https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
 <a href="https://jwt.io/">
-    <img src= "https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"/>
+    <img src= "https://img.shields.io/badge/JWT-grey?style=for-the-badge&logo=JSON%20web%20tokens"/>
 </a>
  </div>
 
@@ -60,22 +59,42 @@ Tecnologías utilizadas:
 ## Local installation
 1. Clone the repository:
 
-    `git clone [repository](https://github.com/JesusMatinezClavel/GeeksHub_FourthAssignment_TattooShop.git)`
+    `$ git clone https://github.com/JesusMatinezClavel/GeeksHub_FourthAssignment_TattooShop/tree/develop`
+
 2. Install the dependencies
 
     ` $ npm install `
 
-3. Conect our repository with the database
+3. Create the file `.env` from `.env.sample` and change the values to your needs:
+
+    Port where the server will be:
+
+        PORT= 
+
+    Credentials for the database:
+
+        DB_host= 
+        DB_port= 
+        DB_username= 
+        DB_password= 
+        DB_database= 
+
+    Token's secret:
+
+        JWT_secret=
+
+4. Conect our repository with the database
 
     `$ npm run dev`
 
-4. Execute the migrations
+5. Execute the migrations
 
     ` $ npm run run-migrations ` 
 
-5. Execute the seeders
+6. Execute the seeders
 
     ` $ Ejecutamos los seeders `
+
 
 ## Endpoints
 <details>
@@ -226,7 +245,7 @@ Sugestions are always welcomed!
 
 You can do it both ways:
 
-1. Creating an issue
+1. Create an issue
 2. Create a fork of the repository
     - Create new branch
         ```

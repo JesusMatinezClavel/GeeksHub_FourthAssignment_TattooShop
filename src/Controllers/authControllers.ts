@@ -64,8 +64,6 @@ export const registration = async (req: Request, res: Response) => {
     }
 }
 
-
-
 export const login = async (req: Request, res: Response) => {
     try {
         // Sacamos los valores a intrudocir desde el req.body

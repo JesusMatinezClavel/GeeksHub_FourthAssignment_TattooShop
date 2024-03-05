@@ -5,27 +5,31 @@ import { Service } from "../models/Service";
 
 export const createAppointment = async (req: Request, res: Response) => {
     try {
-
+        // Cogemos los datos del req.body y el req.tokenData
         const service = req.body.service
         const id = req.tokenData.userID
+        // Convertimos req.body.date en un DATE
         const date = new Date(req.body.date)
-        const currentDate = new Date()       
+        // Creamos un Date con la fecha actual
+        const currentDate = new Date()
 
+        // Validamos los datos obtenidos por el body
         if (!service || !date) {
             return res.status(400).json({
                 success: false,
                 message: `Service or date invalid!`
             })
         }
-        if (date < currentDate){
+        // Validamos que la fecha elegida no sea anterior a la fecha actual
+        if (date < currentDate) {
             return res.status(400).json({
                 success: false,
                 message: `${date} is not a valid date!`
             })
         }
 
-
-            const newAppointment = new Appointment()
+        // Creamos una nueva Appointment
+        const newAppointment = new Appointment()
         newAppointment.appointmentDate = new Date(date)
         newAppointment.user = {
             id: id
@@ -52,11 +56,13 @@ export const createAppointment = async (req: Request, res: Response) => {
 
 export const updateAppointment = async (req: Request, res: Response) => {
     try {
+        // Cogemos los datos del req.body y el req.tokenData
         const appointmentID = req.body.appointmentID
         const service = req.body.service
         const id = req.tokenData.userID
         const date = req.body.date
 
+        // Validamos los datos obtenidos por el body
         if (!service || !date || !appointmentID) {
             return res.status(400).json({
                 success: false,
@@ -64,6 +70,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
             })
         }
 
+        // Llamamos al Appointment si coinciden en el ID y el user_id
         const permited = await Appointment.findOne({
             where: {
                 id: appointmentID,
@@ -73,6 +80,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
             }
         })
 
+        // Validamos que esa Appointment exista
         if (!permited) {
             return res.status(400).json({
                 success: false,
@@ -80,6 +88,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
             })
         }
 
+        // Actualizamos la Appointment
         await Appointment.update(
             {
                 id: appointmentID,
@@ -94,6 +103,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
             }
         )
 
+        // Llamamos a la Appointment actualizada para mostrarla por el Response
         const newAppointment = await Appointment.findOne({
             where: {
                 id: appointmentID
@@ -116,8 +126,10 @@ export const updateAppointment = async (req: Request, res: Response) => {
 
 export const getAppointments = async (req: Request, res: Response) => {
     try {
+        // Cogemos el id de req.tokenData
         const tokenId = req.tokenData.userID
 
+        // Llamamos a todas las Appointments que tengan ese user_id
         const appointments = await Appointment.find({
             where: {
                 user: {
@@ -151,19 +163,19 @@ export const getAppointments = async (req: Request, res: Response) => {
 
 export const getAppointmentsById = async (req: Request, res: Response) => {
     try {
+        // Cogemos los datos del req.params y el req.tokenData 
         const appointmentID = Number(req.params.id)
         const tokenId = req.tokenData.userID
-        console.log(req.params.id);
 
-
-
-
+        // Validamos los datos obtenidos por el req.params
         if (isNaN(appointmentID) || req.params.id === null) {
             return res.status(400).json({
                 success: false,
                 message: `Appointment ID is not valid!`
             })
         }
+
+        // Llamamos a la Appointment que coincida con el ID y el user_id
         const appointment = await Appointment.findOne({
             where: {
                 id: appointmentID,
@@ -173,6 +185,7 @@ export const getAppointmentsById = async (req: Request, res: Response) => {
             }
         })
 
+        // Validamos que la Appointment exista
         if (!appointment) {
             return res.status(400).json({
                 success: false,
