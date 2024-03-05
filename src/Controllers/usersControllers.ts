@@ -110,7 +110,7 @@ export const getOwnProfile = async (req: Request, res: Response) => {
         // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
         const id = req.tokenData.userID
         console.log(id);
-        
+
         const ownUser = await User.findOne({
             // Filtramos por nuestro propio id
             where: {
@@ -129,7 +129,7 @@ export const getOwnProfile = async (req: Request, res: Response) => {
                 passwordHash: true
             }
         })
-        
+
         res.status(200).json(
             {
                 success: true,
@@ -194,13 +194,83 @@ export const deleteUsers = async (req: Request, res: Response) => {
     }
 }
 
-export const updateOwnProfile = (req: Request, res: Response) => {
+export const updateOwnProfile = async (req: Request, res: Response) => {
     try {
-        
+        const id = req.tokenData.userID
+
+
+        let firstName = req.body.firstName.trim()
+        let lastName = req.body.lastName.trim()
+        let email = req.body.email.trim()
+        let password = bcrypt.hashSync(req.body.password.trim(), 8)
+        const ownProfile = await User.findOne({
+            // Filtramos por nuestro propio id
+            where: {
+                id: id
+            },
+            // Seleccionamos las relaciones a mostrar
+            relations: {
+                role: true
+            },
+            // Seleccionamos los datos a mostrar
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                passwordHash: true
+            }
+        })
+
+        if (req.body.firstName === "") {
+            firstName = ownProfile?.firstName
+        }
+        if (req.body.lastName === "") {
+            lastName = ownProfile?.lastName
+        }
+        if (req.body.email === "") {
+            email = ownProfile?.email
+        }
+        if (req.body.password === ""){
+            password = ownProfile!.passwordHash
+        }
+
+        await User.update(
+            {
+                id: id
+            },
+            {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                passwordHash: password
+            }
+        )
+        const updatedProfile = await User.findOne({
+            // Filtramos por nuestro propio id
+            where: {
+                id: id
+            },
+            // Seleccionamos las relaciones a mostrar
+            relations: {
+                role: true
+            },
+            // Seleccionamos los datos a mostrar
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                passwordHash: true
+            }
+        })
+
         res.status(200).json(
             {
                 succes: true,
-                message: `Profile updated succesfully!`
+                message: `Profile updated succesfully!`,
+                data: ownProfile,
+                data2: updatedProfile
             }
         )
     } catch (error) {
