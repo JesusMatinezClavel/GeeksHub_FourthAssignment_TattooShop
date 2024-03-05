@@ -6,8 +6,8 @@ import { Request, Response } from "express";
 import 'dotenv/config'
 
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
-import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
-import { deleteUsers, getAllUsers, getOwnProfile, updateUsers } from "./Controllers/usersControllers";
+// import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
+import { deleteUsers, getAllUsers, getOwnProfile, updateOwnProfile } from "./Controllers/usersControllers";
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
@@ -35,14 +35,14 @@ app.post('/api/auth/login', login)
 
 
 //                               Roles routes
-app.get('/roles', getRoles)
-app.post('/roles', createRoles)
-app.put('/roles', updateRoles)
-app.delete('/roles', deleteRoles)
+// app.get('/roles', getRoles)
+// app.post('/roles', createRoles)
+// app.put('/roles', updateRoles)
+// app.delete('/roles', deleteRoles)
 
 //                               Users routes
 app.get('/api/users', auth, isSuperAdmin, getAllUsers)
 app.get('/api/users?email=', auth, isSuperAdmin, getAllUsers)
 app.get('/api/users/profile', auth, getOwnProfile)
-app.put('/users', updateUsers)
-app.delete('/api/users/:id', deleteUsers)
+app.put('/api/users/profile', auth, updateOwnProfile)
+app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers)

@@ -1,7 +1,8 @@
 // Importamos las interfaces Request y Response para poder comunicarnos con el servidor
 import { Request, Response } from "express";
 import { User } from "../models/User";
-import { TokenData } from "../types";
+import bcrypt from "bcrypt";
+
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
@@ -52,7 +53,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
             const skip = (page - 1) * limit
             const lengUsers = await User.find()
 
-            if (limit <= 0 || page <= 0||!Number.isInteger(limit)||!Number.isInteger(page)) {
+            if (limit <= 0 || page <= 0 || !Number.isInteger(limit) || !Number.isInteger(page)) {
                 return res.status(400).json({
                     succes: false,
                     message: `Limit or page selected are not valid`
@@ -61,7 +62,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
             if (limit > 20) {
                 limit = 20
             }
-            if (skip > lengUsers.length) {
+            if (skip >= lengUsers.length) {
                 return res.status(400).json({
                     succes: false,
                     message: `There are no more users to call`
@@ -107,11 +108,13 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getOwnProfile = async (req: Request, res: Response) => {
     try {
         // Cogemos el userID del tokenData para utilizarlo como filtro para buscar el perfil propio
-        const email = req.query.email
-        const getAllUsers = await User.findOne({
+        const id = req.tokenData.userID
+        console.log(id);
+        
+        const ownUser = await User.findOne({
             // Filtramos por nuestro propio id
             where: {
-                email: email?.toString()
+                id: id
             },
             // Seleccionamos las relaciones a mostrar
             relations: {
@@ -123,25 +126,23 @@ export const getOwnProfile = async (req: Request, res: Response) => {
                 firstName: true,
                 lastName: true,
                 email: true,
-                passwordHash: true,
-                role: {
-                    id: true,
-                    rolename: true
-                }
+                passwordHash: true
             }
         })
+        
         res.status(200).json(
             {
-                succes: true,
-                message: 'user called succesfully',
-                data: getAllUsers
+                success: true,
+                message: 'Got own profile succesfully',
+                data: ownUser
             }
         )
     } catch (error) {
         res.status(500).json(
             {
-                succes: true,
-                message: 'fatal error!'
+                success: true,
+                message: 'fatal error!',
+                error: error
             }
         )
     }
@@ -164,7 +165,7 @@ export const deleteUsers = async (req: Request, res: Response) => {
                 id: userID
             }
         })
-        if(!user){
+        if (!user) {
             return res.status(400).json(
                 {
                     succes: true,
@@ -193,11 +194,23 @@ export const deleteUsers = async (req: Request, res: Response) => {
     }
 }
 
-export const updateUsers = (req: Request, res: Response) => {
-    res.status(200).json(
-        {
-            succes: true,
-            message: 'users updated succesfully'
-        }
-    )
+export const updateOwnProfile = (req: Request, res: Response) => {
+    try {
+        
+        res.status(200).json(
+            {
+                succes: true,
+                message: `Profile updated succesfully!`
+            }
+        )
+    } catch (error) {
+
+        res.status(500).json(
+            {
+                succes: true,
+                message: `Profile cannot update`,
+                error: error
+            }
+        )
+    }
 }

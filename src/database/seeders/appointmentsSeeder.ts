@@ -6,27 +6,10 @@ import { User } from "../../models/User";
 export const generateAppointment = () => {
 
     const randomAppointment = new Appointment()
-    // const startDate = faker.date.recent()
-    // const endDate = faker.date.future()
-    
-    const usedDates: Set<string> = new Set();
     
     const startDate = new Date('2024-03-03');
-    const endDate = new Date('2025-03-03');
-
-    function generateRandomDate(a: Date, b: Date): Date {
-        while (true) {
-            const randomDate: Date = faker.date.between({from: a, to: b});
-            const date: string = randomDate.toISOString().split('T')[0];
-
-            if (!usedDates.has(date)) {
-                usedDates.add(date);
-                return randomDate;
-            }
-        }
-    }
-    const uniqueRandomDate = generateRandomDate(startDate, endDate);
-    randomAppointment.appointmentDate = uniqueRandomDate
+    const endDate = new Date('2028-03-03');
+    randomAppointment.appointmentDate = faker.date.between({from: startDate, to: endDate})
 
     randomAppointment.user = {
         id: faker.number.int({ min: 1, max: 20 })
@@ -40,9 +23,7 @@ export const generateAppointment = () => {
 
 export const seederAppointments = async () => {
 
-    generateAppointment()
-
-    const appointments = Array.from({ length: 20 }, generateAppointment)
+    const appointments = Array.from({ length: 10 }, generateAppointment)
 
     await Appointment.save(appointments);
 
