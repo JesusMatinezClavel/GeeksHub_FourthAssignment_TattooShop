@@ -7,7 +7,7 @@ import 'dotenv/config'
 
 // Se importan automáticamente desde sus respectivos .ts en la carpeta ./src/Controllers
 // import { createRoles, deleteRoles, getRoles, updateRoles } from "./Controllers/rolesControllers";
-import { deleteUsers, getAllUsers, getOwnProfile, updateOwnProfile } from "./Controllers/usersControllers";
+import { deleteUsers, getAllUsers, getOwnProfile, updateOwnProfile, updateRoles } from "./Controllers/usersControllers";
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
@@ -45,4 +45,5 @@ app.get('/api/users', auth, isSuperAdmin, getAllUsers)
 app.get('/api/users?email=', auth, isSuperAdmin, getAllUsers)
 app.get('/api/users/profile', auth, getOwnProfile)
 app.put('/api/users/profile', auth, updateOwnProfile)
+app.put('/api/users/:id/role', auth, isSuperAdmin, updateRoles)
 app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers)

@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
+import { Role } from "../models/Role";
 
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -231,7 +232,7 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
         if (req.body.email === "") {
             email = ownProfile?.email
         }
-        if (req.body.password === ""){
+        if (req.body.password === "") {
             password = ownProfile!.passwordHash
         }
 
@@ -271,6 +272,68 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
                 message: `Profile updated succesfully!`,
                 data: ownProfile,
                 data2: updatedProfile
+            }
+        )
+    } catch (error) {
+
+        res.status(500).json(
+            {
+                succes: true,
+                message: `Profile cannot update`,
+                error: error
+            }
+        )
+    }
+}
+
+
+export const updateRoles = async (req: Request, res: Response) => {
+    try {
+        const id = Number(req.params.id)
+        const role = req.body.id
+
+        if (id === null || role === null || isNaN(id) || isNaN(role) || id <= 0 || role <= 0 || Number.isInteger(id) || Number.isInteger(role)) {
+            return res.status(200).json(
+                {
+                    succes: false,
+                    message: `id or role invalid!`,
+                }
+            )
+        }
+
+        await User.update(
+            {
+                id: id
+            }, {
+            role: {
+                id: role
+            }
+        })
+
+        const updatedRole = await User.findOne({
+            // Filtramos por nuestro propio id
+            where: {
+                id: id
+            },
+            // Seleccionamos las relaciones a mostrar
+            relations: {
+                role: true
+            },
+            // Seleccionamos los datos a mostrar
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                passwordHash: true
+            }
+        })
+
+        res.status(200).json(
+            {
+                succes: true,
+                message: `Profile updated succesfully!`,
+                data2: updatedRole
             }
         )
     } catch (error) {
