@@ -21,7 +21,7 @@ export const seederServices = async () => {
 
     const Service4 = new Service()
     Service4.serviceName = `Colocación de Piercings y Dilatadores`
-    Service4.description = `Nos especializamos en mejorar y renovar tatuajes existentes. Nuestro equipo de expertos trabaja para restaurar la vitalidad de tatuajes antiguos que puedan haber perdido su brillo con el tiempo. Ofrecemos servicios de retoque, corrección de colores y realce de detalles para asegurar que el tatuaje luzca fresco y vibrante. Este servicio es ideal para aquellos que desean revitalizar un tatuaje existente o corregir trabajos previos.`
+    Service4.description = `Ofrecemos servicios profesionales para la colocación de piercings y dilatadores. Nuestro equipo garantiza procedimientos seguros y estilos variados para satisfacer las preferencias individuales de nuestros clientes.`
     await Service4.save()
 
     const Service5 = new Service()
