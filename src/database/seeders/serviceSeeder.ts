@@ -1,7 +1,7 @@
 
 import { Service } from "../../models/Service";
 
-
+// Creamos los 5 Services necesarios
 export const seederServices = async () => {
 
     const Service1 = new Service()

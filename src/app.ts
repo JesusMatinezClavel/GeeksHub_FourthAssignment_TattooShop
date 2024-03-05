@@ -29,20 +29,19 @@ app.get("/healthy", (req: Request, res: Response) => {
 })
 
 // Creamos las rutas para las distintas tablas importando las funciones desde la carpeta ./src/Controllers
-
-//                               Auth routes
-
-app.post('/api/auth/register', registration)
-app.post('/api/auth/login', login)
-
-
 //                               Roles routes
 // app.get('/roles', getRoles)
 // app.post('/roles', createRoles)
 // app.put('/roles', updateRoles)
 // app.delete('/roles', deleteRoles)
 
-//                               Users routes
+
+//                                                             Auth routes
+
+app.post('/api/auth/register', registration)
+app.post('/api/auth/login', login)
+
+//                                                             Users routes
 app.get('/api/users', auth, isSuperAdmin, getAllUsers)
 app.get('/api/users?email=', auth, isSuperAdmin, getAllUsers)
 app.get('/api/users/profile', auth, getOwnProfile)
@@ -50,14 +49,14 @@ app.put('/api/users/profile', auth, updateOwnProfile)
 app.put('/api/users/:id/role', auth, isSuperAdmin, updateRoles)
 app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers)
 
-//                               Appointments routes
+//                                                             Appointments routes
 app.post('/api/appointments', auth, createAppointment)
 app.put('/api/appointments', auth, updateAppointment)
 app.get('/api/appointments', auth, getAppointments)
 app.get('/api/appointments/:id', auth, getAppointmentsById)
 
 
-//                               Services routes
+//                                                             Services routes
 app.get('/api/services', auth, getAllServices)
 app.post('/api/services', auth, isSuperAdmin, createNewService)
 app.put('/api/services/:id', auth, isSuperAdmin, updateService)
