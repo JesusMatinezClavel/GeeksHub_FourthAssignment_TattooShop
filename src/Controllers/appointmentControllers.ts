@@ -10,10 +10,10 @@ export const createAppointment = async (req: Request, res: Response) => {
         const id = req.tokenData.userID
         const date = req.body.date
 
-        if(!service||!date){
+        if (!service || !date) {
             return res.status(400).json({
                 success: false,
-                message:`Service or date invalid!`
+                message: `Service or date invalid!`
             })
         }
 
@@ -42,3 +42,62 @@ export const createAppointment = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+export const updateAppointment = async (req: Request, res: Response) => {
+    try {
+        const appointmentID = req.body.appointmentID
+        const service = req.body.service
+        const id = req.tokenData.userID
+        const date = req.body.date
+
+        if (!service || !date || !appointmentID) {
+            return res.status(400).json({
+                success: false,
+                message: `Service or date invalid!`
+            })
+        }
+
+        const permited = await Appointment.findOne({
+            where: {
+                id: appointmentID,
+                user: {
+                    id: id
+                }
+            }
+        })
+
+        if (!permited) {
+            return res.status(400).json({
+                success: false,
+                message: `You have no acces to this appointment: ${appointmentID}`
+            })
+        }
+
+        await Appointment.update(
+            {
+                id: appointmentID,
+                user: {
+                    id: id
+                }
+
+            },
+            {
+                appointmentDate: date,
+                service: service
+            }
+        )
+
+        res.status(200).json({
+            success: true,
+            message: `appointment updated!`,
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: `cannot create new appointment`,
+            error: error
+        })
+    }
+}
+

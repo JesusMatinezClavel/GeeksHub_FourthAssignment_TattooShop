@@ -11,7 +11,7 @@ import { deleteUsers, getAllUsers, getOwnProfile, updateOwnProfile, updateRoles 
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
-import { createAppointment } from "./Controllers/appointmentControllers";
+import { createAppointment, updateAppointment } from "./Controllers/appointmentControllers";
 
 // Creamos la constante App a partir de express
 export const app: Application = express()
@@ -52,3 +52,4 @@ app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers)
 
 //                               Appointments routes
 app.post('/api/appointments', auth, createAppointment)
+app.put('/api/appointments', auth, updateAppointment)
