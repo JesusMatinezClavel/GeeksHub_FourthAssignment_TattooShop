@@ -112,7 +112,7 @@ export const updateService = async (req: Request, res: Response) => {
             description = service?.description
         }
         if(!service){
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: `Service doesn't exist!`,
             })
@@ -156,6 +156,22 @@ export const updateService = async (req: Request, res: Response) => {
 
 export const deleteService = async (req: Request, res: Response) => {
     try {
+        const serviceID = req.params.id
+
+        const service = await Service.findOne({
+            where: {
+                id: Number(serviceID)
+            }
+        })
+
+        if(!service){
+            return res.status(400).json({
+                success: false,
+                message: `The service ${serviceID} doesn't exist!`,
+            })
+        }
+
+        await Service.delete(serviceID)
 
         res.status(200).json({
             success: true,
