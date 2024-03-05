@@ -87,7 +87,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 
     ` $ Ejecutamos los seeders `
 
-7. Import the ThunderClient collection from: 
+7. Import the ThunderClient collection from the master branch: 
 
     `./src/database/HTTP`
 
