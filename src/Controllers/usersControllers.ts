@@ -2,7 +2,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
-import { Role } from "../models/Role";
 
 // Exportamos cada una de las constantes para poder utilizarlas directamente en las rutas declaradas en app.ts
 export const getAllUsers = async (req: Request, res: Response) => {
