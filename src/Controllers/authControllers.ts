@@ -117,7 +117,7 @@ export const login = async (req: Request, res: Response) => {
             })
         }
         // Creamos el token a través del package JsonWebToken 
-        // Le vinculamos los valores del user.id(user?.id) con el role_id (user?.role)
+        // Le vinculamos los valores del user.id(user?.id) con el user.role.rolename (user?.role)
         const token = jwt.sign({
             userID: user?.id,
             roleName: user?.role.rolename
