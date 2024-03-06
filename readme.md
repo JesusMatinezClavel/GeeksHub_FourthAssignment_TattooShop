@@ -85,7 +85,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 
 6. Execute the seeders
 
-    ` $ npm run seed-db
+    ` $ npm run seed-db`
 
 7. Import the ThunderClient collection from: 
 
