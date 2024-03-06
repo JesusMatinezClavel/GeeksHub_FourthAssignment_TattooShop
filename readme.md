@@ -1,5 +1,7 @@
 # Welcome to my Backend App📢
 
+![Tattoo_Studio](./img/Tattoo_Studio.png)
+
 <details>
   <summary>Content 📝</summary>
   <ol>
