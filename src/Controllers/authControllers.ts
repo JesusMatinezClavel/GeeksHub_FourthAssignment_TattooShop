@@ -49,11 +49,12 @@ export const registration = async (req: Request, res: Response) => {
             email: email
         }).save()
 
+        const {passwordHash,...restUser} = newUser as User
         // Mostramos el nuevo usuario creado por la response
         res.status(200).json({
             succes: true,
             message: `New user created: ${name} ${lastName}`,
-            data: newUser
+            data: restUser
         })
     } catch (error) {
         res.status(500).json({
@@ -125,11 +126,13 @@ export const login = async (req: Request, res: Response) => {
             process.env.JWT_secret as string,
             { expiresIn: '2h' })
 
+        const {passwordHash,...restUser} = user as User
+
         // Mostramos por response el usuario logeado y el token creado
         res.status(200).json({
             succes: true,
             message: `Logged in succesfully!`,
-            data: user,
+            data: restUser,
             token: token
         })
     } catch (error) {

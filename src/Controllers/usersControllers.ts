@@ -43,11 +43,12 @@ export const getAllUsers = async (req: Request, res: Response) => {
                 )
             }
 
+            const { passwordHash, ...restUser } = getUser as User
             res.status(200).json(
                 {
                     succes: true,
                     message: 'user called succesfully',
-                    data: getUser
+                    data: restUser
                 }
             )
             // Si no existe un email en el Query ejecutamos la función para llamar a todos los Users
@@ -139,6 +140,7 @@ export const getOwnProfile = async (req: Request, res: Response) => {
             }
         })
 
+        const { passwordHash, ...restUser } = ownUser as User
         res.status(200).json(
             {
                 success: true,

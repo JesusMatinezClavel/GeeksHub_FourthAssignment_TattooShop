@@ -5,9 +5,6 @@ import { Service } from "../models/Service";
 
 export const getAllServices = async (req: Request, res: Response) => {
     try {
-        // Cogemos el id desde el req.tokenData
-        const tokenID = req.tokenData.userID
-
         // Llamamos a todos los servicios para mostrarlos por el Response
         const allServices = await Service.find({})
 
