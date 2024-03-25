@@ -60,11 +60,12 @@ export const registration = async (req: Request, res: Response) => {
             email: email
         }).save()
 
+        const {passwordHash,...restUser} = newUser as User
         // Mostramos el nuevo usuario creado por la response
         res.status(200).json({
             success: true,
             message: `New user created: ${name} ${lastName}`,
-            data: newUser
+            data: restUser
         })
     } catch (error) {
         res.status(500).json({
@@ -150,7 +151,7 @@ export const login = async (req: Request, res: Response) => {
             })
         }
         // Creamos el token a través del package JsonWebToken 
-        // Le vinculamos los valores del user.id(user?.id) con el role_id (user?.role)
+        // Le vinculamos los valores del user.id(user?.id) con el user.role.rolename (user?.role)
         const token = jwt.sign({
             userID: user?.id,
             roleName: user?.role.rolename
@@ -158,11 +159,13 @@ export const login = async (req: Request, res: Response) => {
             process.env.JWT_secret as string,
             { expiresIn: '2h' })
 
+        const {passwordHash,...restUser} = user as User
+
         // Mostramos por response el usuario logeado y el token creado
         res.status(200).json({
             success: true,
             message: `Logged in successfully!`,
-            data: user,
+            data: restUser,
             token: token
         })
     } catch (error) {

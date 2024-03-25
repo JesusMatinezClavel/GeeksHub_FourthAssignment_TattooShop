@@ -1,4 +1,6 @@
-# Welcome to my Backend App📢
+# Tattoo's Studio📢
+
+![Tattoo_Studio](./img/Tattoo_Studio.png)
 
 <details>
   <summary>Content 📝</summary>
@@ -91,7 +93,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 
 6. Execute the seeders
 
-    ` $ Ejecutamos los seeders `
+    ` $ npm run seed-db`
 
 7. Import the ThunderClient collection from: 
 

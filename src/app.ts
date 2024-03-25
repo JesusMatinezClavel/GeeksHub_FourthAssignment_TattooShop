@@ -59,7 +59,7 @@ app.get('/api/appointments/:id', auth, getAppointmentsById)
 
 
 //                                                             Services routes
-app.get('/api/services', auth, getAllServices)
+app.get('/api/services', getAllServices)
 app.post('/api/services', auth, isSuperAdmin, createNewService)
 app.put('/api/services/:id', auth, isSuperAdmin, updateService)
 app.delete('/api/services/:id', auth, isSuperAdmin, deleteService)
