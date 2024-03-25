@@ -147,7 +147,7 @@ export const login = async (req: Request, res: Response) => {
         if (!isValidPassword) {
             return res.status(400).json({
                 success: false,
-                message: `The password: ${password} is incorrect!`
+                message: `The password is incorrect!`
             })
         }
         // Creamos el token a través del package JsonWebToken 

@@ -22,7 +22,7 @@ export const generateControlUsers = async () => {
     newUser.firstName = 'user'
     newUser.lastName = 'test'
     newUser.email = 'user@user.com'
-    newUser.passwordHash = bcrypt.hashSync('Pwd1233456', 8)
+    newUser.passwordHash = bcrypt.hashSync('Aa123456', 8)
     newUser.role = {
         id: 1
     } as Role
@@ -32,7 +32,7 @@ export const generateControlUsers = async () => {
     newAdmin.firstName = 'admin'
     newAdmin.lastName = 'test'
     newAdmin.email = 'admin@admin.com'
-    newAdmin.passwordHash = bcrypt.hashSync('Pwd1233456', 8)
+    newAdmin.passwordHash = bcrypt.hashSync('Aa123456', 8)
     newAdmin.role = {
         id: 2
     } as Role
@@ -42,7 +42,7 @@ export const generateControlUsers = async () => {
     newSuperAdmin.firstName = 'super_admin'
     newSuperAdmin.lastName = 'test'
     newSuperAdmin.email = 'super_admin@super_admin.com'
-    newSuperAdmin.passwordHash = bcrypt.hashSync('Pwd1233456', 8)
+    newSuperAdmin.passwordHash = bcrypt.hashSync('Aa123456', 8)
     newSuperAdmin.role = {
         id: 3
     } as Role
