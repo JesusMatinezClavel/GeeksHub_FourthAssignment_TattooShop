@@ -29,7 +29,7 @@ export const registration = async (req: Request, res: Response) => {
 
         // Validamos el formato de la contraseña según nuestro criterio (una mayúscula, una minúscula y un número)
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,10}$/;
-        if (passwordRegex.test(password)) {
+        if (!passwordRegex.test(password)) {
             return res.status(400).json(
                 {
                     successs: false,
@@ -93,7 +93,7 @@ export const login = async (req: Request, res: Response) => {
 
         // Validamos el formato de la contraseña según nuestro criterio (una mayúscula, una minúscula y un número)
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,10}$/;
-        if (passwordRegex.test(password)) {
+        if (!passwordRegex.test(password)) {
             return res.status(400).json(
                 {
                     successs: false,
