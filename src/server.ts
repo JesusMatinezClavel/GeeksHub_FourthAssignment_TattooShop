@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 4001
 import { app } from "./app"
 import { AppDataSource } from './database/db'
 
+
 // Ponemos en marcha el servidor tras comprobar que la base de datos está conectada
 const startServer = () => {
     AppDataSource.initialize()

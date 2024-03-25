@@ -28,20 +28,26 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 <a href="https://nextjs.org/">
     <img src= "https://img.shields.io/badge/node.js-026E00?style=for-the-badge&logo=node.js&logoColor=white"/>
 </a>
-<a href="https://www.docker.com/">
-    <img src= "https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
+<a href="https://www.mongodb.com/es">
+    <img src= "https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"/>
 </a>
-<a href="https://www.mysql.com/">
-    <img src= "https://img.shields.io/badge/mysql-3E6E93?style=for-the-badge&logo=mysql&logoColor=white"/>
+<a href="https://developer.mozilla.org/es/docs/Web/JavaScript">
+    <img src= "https://img.shields.io/badge/javascript-orange?style=for-the-badge&logo=javascript    "/>
+</a>
+<a href="https://jwt.io/">
+    <img src= "https://img.shields.io/badge/JWT-grey?style=for-the-badge&logo=JSON%20web%20tokens"/>
+</a>
+<a href="https://www.npmjs.com/package/dotenv">
+    <img src= "https://img.shields.io/badge/dotenv-blue?style=for-the-badge&logo=dotenv    "/>
+</a>
+<a href="https://www.npmjs.com/package/bcrypt">
+    <img src= "https://img.shields.io/badge/bcrypt-%23F7DF1E?style=for-the-badge&logo=bcrypt"/>
 </a>
 <a href="https://git-scm.com/">
     <img src= "https://img.shields.io/badge/git-F54D27?style=for-the-badge&logo=git&logoColor=white"/>
 </a>
 <a href="https://www.github.com/">
     <img src= "https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white"/>
-</a>
-<a href="https://jwt.io/">
-    <img src= "https://img.shields.io/badge/JWT-grey?style=for-the-badge&logo=JSON%20web%20tokens"/>
 </a>
  </div>
 

@@ -1,6 +1,7 @@
 // Importamos el package Express, junto con el Request y Response
 import express, { Application } from "express"
 import { Request, Response } from "express";
+import cors from "cors";
 
 // Importamos la config de dotenv
 import 'dotenv/config'
@@ -19,6 +20,7 @@ export const app: Application = express()
 
 // Creamos el middleware de Express para manejar los datos como .json
 app.use(express.json());
+app.use(cors())
 
 // Comprobamos si el servidor responde correctamente
 app.get("/healthy", (req: Request, res: Response) => {

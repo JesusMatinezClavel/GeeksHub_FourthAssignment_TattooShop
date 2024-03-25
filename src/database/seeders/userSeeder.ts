@@ -11,7 +11,7 @@ const generateUsers = () => {
     // Generamos el email a partir del firstName y el lastName
     randomUser.email = faker.internet.email({ firstName, lastName })
     // Generamos una contraseña y la hasheamos
-    randomUser.passwordHash = bcrypt.hashSync(faker.internet.password({ length: 8, memorable: true }), 8)
+    randomUser.passwordHash = bcrypt.hashSync((faker.internet.password({ length: 8, memorable: true }) + faker.number.int({ min: 0, max: 9 })), 8)
 
     return randomUser
 }
@@ -22,7 +22,7 @@ export const generateControlUsers = async () => {
     newUser.firstName = 'user'
     newUser.lastName = 'test'
     newUser.email = 'user@user.com'
-    newUser.passwordHash = bcrypt.hashSync('password', 8)
+    newUser.passwordHash = bcrypt.hashSync('Pwd1233456', 8)
     newUser.role = {
         id: 1
     } as Role
@@ -32,7 +32,7 @@ export const generateControlUsers = async () => {
     newAdmin.firstName = 'admin'
     newAdmin.lastName = 'test'
     newAdmin.email = 'admin@admin.com'
-    newAdmin.passwordHash = bcrypt.hashSync('password', 8)
+    newAdmin.passwordHash = bcrypt.hashSync('Pwd1233456', 8)
     newAdmin.role = {
         id: 2
     } as Role
@@ -42,7 +42,7 @@ export const generateControlUsers = async () => {
     newSuperAdmin.firstName = 'super_admin'
     newSuperAdmin.lastName = 'test'
     newSuperAdmin.email = 'super_admin@super_admin.com'
-    newSuperAdmin.passwordHash = bcrypt.hashSync('password', 8)
+    newSuperAdmin.passwordHash = bcrypt.hashSync('Pwd1233456', 8)
     newSuperAdmin.role = {
         id: 3
     } as Role

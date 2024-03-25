@@ -14,7 +14,7 @@ export const registration = async (req: Request, res: Response) => {
         // Validamos que los datos obtenidos sean válidos
         if (!name || !lastName || !password || !email) {
             return res.status(400).json({
-                succes: false,
+                success: false,
                 message: `An error ocurred`,
             })
         }
@@ -22,9 +22,20 @@ export const registration = async (req: Request, res: Response) => {
         // Validamos la longitud de la contraseña
         if (password.length > 10 || password.length < 6) {
             return res.status(400).json({
-                succes: false,
+                success: false,
                 message: `password ${password} not valid`,
             })
+        }
+
+        // Validamos el formato de la contraseña según nuestro criterio (una mayúscula, una minúscula y un número)
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,10}$/;
+        if (passwordRegex.test(password)) {
+            return res.status(400).json(
+                {
+                    successs: false,
+                    message: "password has to be 6-10 long and have an upper, a lower-case and a number"
+                }
+            )
         }
 
         // Validamos el formato del email
@@ -32,7 +43,7 @@ export const registration = async (req: Request, res: Response) => {
         if (!validEmail.test(email)) {
             return res.status(400).json(
                 {
-                    success: false,
+                    successs: false,
                     message: "format email invalid"
                 }
             )
@@ -51,13 +62,13 @@ export const registration = async (req: Request, res: Response) => {
 
         // Mostramos el nuevo usuario creado por la response
         res.status(200).json({
-            succes: true,
+            success: true,
             message: `New user created: ${name} ${lastName}`,
             data: newUser
         })
     } catch (error) {
         res.status(500).json({
-            succes: false,
+            success: false,
             message: `User cannot be registered`,
             error: error
         })
@@ -74,9 +85,31 @@ export const login = async (req: Request, res: Response) => {
         // Validamos que los datos obtenidos sean válidos
         if (!email || !password) {
             return res.status(200).json({
-                succes: false,
+                success: false,
                 message: `email or password invalid!`,
             })
+        }
+
+        // Validamos el formato de la contraseña según nuestro criterio (una mayúscula, una minúscula y un número)
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,10}$/;
+        if (passwordRegex.test(password)) {
+            return res.status(400).json(
+                {
+                    successs: false,
+                    message: "password has to be 6-10 long and have an upper, a lower-case and a number"
+                }
+            )
+        }
+
+        // Validamos el formato del email
+        const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+        if (!validEmail.test(email)) {
+            return res.status(400).json(
+                {
+                    successs: false,
+                    message: "format email invalid"
+                }
+            )
         }
 
         // Llamamos a un usuario a partir del email
@@ -103,7 +136,7 @@ export const login = async (req: Request, res: Response) => {
         // Confirmamos si el usuario existe
         if (!user) {
             return res.status(400).json({
-                succes: false,
+                success: false,
                 message: `The email: ${email} doesn't exist!`
             })
         }
@@ -112,7 +145,7 @@ export const login = async (req: Request, res: Response) => {
         const isValidPassword = bcrypt.compareSync(password, user!.passwordHash)
         if (!isValidPassword) {
             return res.status(400).json({
-                succes: false,
+                success: false,
                 message: `The password: ${password} is incorrect!`
             })
         }
@@ -127,15 +160,15 @@ export const login = async (req: Request, res: Response) => {
 
         // Mostramos por response el usuario logeado y el token creado
         res.status(200).json({
-            succes: true,
-            message: `Logged in succesfully!`,
+            success: true,
+            message: `Logged in successfully!`,
             data: user,
             token: token
         })
     } catch (error) {
         res.status(500).json({
-            succes: false,
-            message: `User cannot be registered`,
+            success: false,
+            message: `User cannot log in`,
             error: error
         })
     }
