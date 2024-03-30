@@ -221,7 +221,7 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
         let firstName = req.body.firstName.trim()
         let lastName = req.body.lastName.trim()
         let email = req.body.email.trim()
-        let password = bcrypt.hashSync(req.body.password.trim(), 8)
+        let password = bcrypt.hashSync(req.body.passwordHash.trim(), 8)
 
         // Llamamos a nuestro propio perfil SIN actualizar
         const ownProfile = await User.findOne({
@@ -253,9 +253,46 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
         if (req.body.email === "") {
             email = ownProfile?.email
         }
-        if (req.body.password === "") {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,10}$/;
+        if (req.body.passwordHash === "") {
             password = ownProfile!.passwordHash
+        } else if (!passwordRegex.test(req.body.passwordHash)) {
+            return res.status(400).json(
+                {
+                    successs: false,
+                    message: "password has to be 6-10 long and have an upper, a lower-case and a number"
+                }
+            )
+        } else if (req.body.passwordHash !== req.body.verifyPassword) {
+            return res.status(400).json(
+                {
+                    successs: false,
+                    message: "Both passwords have to match"
+                }
+            )
         }
+
+        // Validamos el formato del email
+        const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+        if (!validEmail.test(email)) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Email format invalid"
+                }
+            )
+        }
+
+        // Validamos el formato de la contraseña según nuestro criterio (una mayúscula, una minúscula y un número)
+        // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,10}$/;
+        // if (!passwordRegex.test(req.body.passwordHash || req.body.verifyPassword)) {
+        //     return res.status(400).json(
+        //         {
+        //             successs: false,
+        //             message: "password has to be 6-10 long and have an upper, a lower-case and a number"
+        //         }
+        //     )
+        // }
 
         // Actualizamos nuestro perfil
         await User.update(
@@ -292,17 +329,16 @@ export const updateOwnProfile = async (req: Request, res: Response) => {
 
         res.status(200).json(
             {
-                succes: true,
+                success: true,
                 message: `Profile updated succesfully!`,
-                data: ownProfile,
-                data2: updatedProfile
+                data: updatedProfile
             }
         )
     } catch (error) {
 
         res.status(500).json(
             {
-                succes: true,
+                success: false,
                 message: `Profile cannot update`,
                 error: error
             }

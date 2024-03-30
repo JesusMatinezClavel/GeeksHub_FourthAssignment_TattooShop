@@ -17,9 +17,9 @@ export class Appointments1708977782137 implements MigrationInterface {
                         generationStrategy: "increment"
                     },
                     {
-                        name: "appointment_date",
+                        name: "appointment_datetime",
                         type: "date",
-                        isUnique: true
+                        isUnique: false
                     },
                     {
                         name: "user_id",
@@ -46,8 +46,8 @@ export class Appointments1708977782137 implements MigrationInterface {
                 ],
                 uniques: [
                     new TableUnique({
-                        name: "user_service_unique",
-                        columnNames: ["appointment_date", "user_id", "service_id"]
+                        name: "appointment_user_service_unique",
+                        columnNames: ["appointment_datetime", "user_id", "service_id"]
                     })
                 ]
             }),

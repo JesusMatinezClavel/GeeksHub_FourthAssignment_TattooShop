@@ -2,14 +2,15 @@ import { Appointment } from "../../models/Appointment"
 import { faker } from "@faker-js/faker";
 import { Service } from "../../models/Service";
 import { User } from "../../models/User";
+import dayjs from "dayjs";
 
 export const generateAppointment = () => {
 
     // Creamos una nueva Appointment a partir del 2024-03-03 hasta el 2028-03-03 utilizando faker
     const randomAppointment = new Appointment()
     const startDate = new Date('2024-03-03');
-    const endDate = new Date('2028-03-03');
-    randomAppointment.appointmentDate = faker.date.between({from: startDate, to: endDate})
+    const endDate = new Date('2030-03-03');
+    randomAppointment.appointmentDatetime = faker.date.between({ from: startDate, to: endDate })
     randomAppointment.user = {
         id: faker.number.int({ min: 1, max: 20 })
     } as User

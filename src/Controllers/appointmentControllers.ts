@@ -2,24 +2,32 @@ import { Request, Response } from "express";
 import { User } from "../models/User";
 import { Appointment } from "../models/Appointment";
 import { Service } from "../models/Service";
+import { app } from "../app";
+import dayjs from "dayjs";
 
 export const createAppointment = async (req: Request, res: Response) => {
     try {
         // Cogemos los datos del req.body y el req.tokenData
         const service = req.body.service
-        const id = req.tokenData.userID
+        const id = Number(req.tokenData.userID)
         // Convertimos req.body.date en un DATE
-        const date = new Date(req.body.date)
+        const date = dayjs(req.body.date, "YYYY-MM-DD").format("YYYY-MM-DD")
+        console.log(date);
+        console.log(new Date(date));
+        
+        
+
         // Creamos un Date con la fecha actual
-        const currentDate = new Date()
+        const currentDate = dayjs(new Date(), "YYYY-MM-DD").format("YYYY-MM-DD")
 
         // Validamos los datos obtenidos por el body
         if (!service || !date) {
             return res.status(400).json({
                 success: false,
-                message: `Service or date invalid!`
+                message: `Service, time or date invalid!`
             })
         }
+
         // Validamos que la fecha elegida no sea anterior a la fecha actual
         if (date < currentDate) {
             return res.status(400).json({
@@ -28,9 +36,42 @@ export const createAppointment = async (req: Request, res: Response) => {
             })
         }
 
+        const appointmentExists = await Appointment.find({
+            where: {
+                user: {
+                    id: id
+                },
+            }
+        })
+
+        console.log(appointmentExists);
+
+
+        appointmentExists.map(element => {
+            for (const key in element) {
+                if (element.appointmentDatetime.toString() === date) {
+                    // console.log(element);
+                    
+                    return res.status(400).json({
+                        success: false,
+                        message: `Appointment already exists!`
+                    })
+                }
+            }
+        })
+
+
+
+        // if (appointmentExists) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: `You already have this appointment!`
+        //     })
+        // }
+
         // Creamos una nueva Appointment
         const newAppointment = new Appointment()
-        newAppointment.appointmentDate = new Date(date)
+        newAppointment.appointmentDatetime = new Date(date)
         newAppointment.user = {
             id: id
         } as User
@@ -98,7 +139,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
 
             },
             {
-                appointmentDate: date,
+                appointmentDatetime: date,
                 service: service
             }
         )
@@ -140,7 +181,7 @@ export const getAppointments = async (req: Request, res: Response) => {
                 service: true
             },
             select: {
-                appointmentDate: true,
+                appointmentDatetime: true,
                 service: {
                     serviceName: true
                 }
