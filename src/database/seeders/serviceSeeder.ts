@@ -5,28 +5,30 @@ import { Service } from "../../models/Service";
 export const seederServices = async () => {
 
     const Service1 = new Service()
-    Service1.serviceName = `Tatuajes personalizados`
-    Service1.description = `En este servicio, los clientes tienen la oportunidad de crear un diseño de tatuaje completamente personalizado, adaptado a sus gustos y preferencias. Trabajamos estrechamente con cada cliente, permitiéndoles seleccionar motivos, estilos y elementos únicos que reflejen su personalidad. Nuestros artistas se esfuerzan por materializar la visión del cliente, garantizando una experiencia de tatuaje única y significativa.`
+    Service1.serviceName = `Custom tattoos`
+    Service1.description = `In this service, clients have the opportunity to create a completely personalized tattoo design, tailored to their tastes and preferences. We work closely with each client, allowing them to select unique motifs, styles and elements that reflect their personality. Our artists strive to realize the client's vision, ensuring a unique and meaningful tattoo experience.`
     await Service1.save()
 
     const Service2 = new Service()
-    Service2.serviceName = `Tatuajes del Catálogo`
-    Service2.description = `Ofrecemos una amplia gama de diseños predefinidos en nuestro catálogo para aquellos que prefieren opciones probadas y estilizadas. Los clientes pueden explorar una variedad de opciones, desde estilos clásicos hasta diseños contemporáneos. Nuestro catálogo es una fuente de inspiración para aquellos que buscan tatuajes con un toque único y artístico, proporcionando una selección diversa para satisfacer diferentes gustos y estilos.`
+    Service2.serviceName = `Catalog Tattoos`
+    Service2.description = `We offer a wide range of pre-made designs in our catalog for those who prefer proven and stylish options. Customers can explore a variety of options, from classic styles to contemporary designs. Our catalog is a source of inspiration for those looking for tattoos with a unique and artistic touch, providing a diverse selection to satisfy different tastes and styles.
+    `
     await Service2.save()
 
     const Service3 = new Service()
-    Service3.serviceName = `Restauración y Rejuvenecimiento de Trabajos`
-    Service3.description = `Nos especializamos en mejorar y renovar tatuajes existentes. Nuestro equipo de expertos trabaja para restaurar la vitalidad de tatuajes antiguos que puedan haber perdido su brillo con el tiempo. Ofrecemos servicios de retoque, corrección de colores y realce de detalles para asegurar que el tatuaje luzca fresco y vibrante. Este servicio es ideal para aquellos que desean revitalizar un tatuaje existente o corregir trabajos previos.`
+    Service3.serviceName = `Restoration and Rejuvenation of Works`
+    Service3.description = `We specialize in improving and renewing existing tattoos. Our team of experts works to restore the vibrancy of old tattoos that may have lost their shine over time. We offer touch-up, color correction and detail enhancement services to ensure the tattoo looks fresh and vibrant. This service is ideal for those who want to revitalize an existing tattoo or correct previous work.
+    `
     await Service3.save()
 
     const Service4 = new Service()
-    Service4.serviceName = `Colocación de Piercings y Dilatadores`
-    Service4.description = `Ofrecemos servicios profesionales para la colocación de piercings y dilatadores. Nuestro equipo garantiza procedimientos seguros y estilos variados para satisfacer las preferencias individuales de nuestros clientes.`
+    Service4.serviceName = `Placement of Piercings and Dilators`
+    Service4.description = `We offer professional services for the placement of piercings and dilators. Our team ensures safe procedures and varied styles to meet our clients' individual preferences.`
     await Service4.save()
 
     const Service5 = new Service()
-    Service5.serviceName = `Venta de Piercings y Otros Artículos`
-    Service5.description = `Además de nuestros servicios de aplicación, ofrecemos una selección de piercings y otros artículos relacionados con el arte corporal. Nuestra tienda proporciona a los clientes la oportunidad de adquirir productos de alta calidad que complementan su estilo único. Desde joyería especializada hasta productos de cuidado posterior, nos esforzamos por ofrecer una gama diversa de artículos para satisfacer las necesidades y preferencias de nuestros clientes, tanto durante como después del proceso de modificación corporal.`
+    Service5.serviceName = `Sale of Piercings and Other Items`
+    Service5.description = `In addition to our application services, we offer a selection of piercings and other body art related items. Our store provides customers with the opportunity to purchase high-quality products that complement their unique style. From specialized jewelry to aftercare products, we strive to offer a diverse range of items to meet the needs and preferences of our customers, both during and after the body modification process.`
     await Service5.save()
 
     console.log(`---------------------------`);
