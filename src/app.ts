@@ -12,7 +12,7 @@ import { deleteUsers, getAllUsers, getOwnProfile, updateOwnProfile, updateRoles 
 import { login, registration } from "./Controllers/authControllers";
 import { auth } from "./middelware/auth";
 import { isSuperAdmin } from "./middelware/isSuperAdmin";
-import { createAppointment, getAppointments, getAppointmentsById, updateAppointment } from "./Controllers/appointmentControllers";
+import { createAppointment, deleteOwnAppointment, getAppointments, getAppointmentsById, updateAppointment } from "./Controllers/appointmentControllers";
 import { createNewService, deleteService, getAllServices, updateService } from "./Controllers/serviceControllers";
 
 // Creamos la constante App a partir de express
@@ -55,6 +55,7 @@ app.delete('/api/users/:id', auth, isSuperAdmin, deleteUsers)
 app.post('/api/appointments', auth, createAppointment)
 app.put('/api/appointments', auth, updateAppointment)
 app.get('/api/appointments', auth, getAppointments)
+app.delete('/api/appointments', auth, deleteOwnAppointment)
 app.get('/api/appointments/:id', auth, getAppointmentsById)
 
 

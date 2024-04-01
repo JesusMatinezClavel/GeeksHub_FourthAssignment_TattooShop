@@ -54,7 +54,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
             // Si no existe un email en el Query ejecutamos la función para llamar a todos los Users
         } else {
             // Ponemos un límite a elegir en el Query (siendo este 5 si no se especifica)
-            let limit = Number(req.query.limit) || 5
+            let limit = Number(req.query.limit) || 40
             // Ponemos la página que queremos ver (siendo esta la 1 si no se especifica)
             const page = Number(req.query.page) || 1
             // Hacemos un cálculo por el cual podemos elegir los Users a mostrar dependiendo del limit
@@ -96,6 +96,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
                 take: limit,
                 skip: skip
             })
+
             res.status(200).json(
                 {
                     succes: true,

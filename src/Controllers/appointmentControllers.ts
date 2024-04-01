@@ -11,14 +11,11 @@ export const createAppointment = async (req: Request, res: Response) => {
         const service = req.body.service
         const id = Number(req.tokenData.userID)
         // Convertimos req.body.date en un DATE
-        const date = dayjs(req.body.date, "YYYY-MM-DD").format("YYYY-MM-DD")
-        console.log(date);
-        console.log(new Date(date));
-        
-        
+        const date = new Date(req.body.date)
+
 
         // Creamos un Date con la fecha actual
-        const currentDate = dayjs(new Date(), "YYYY-MM-DD").format("YYYY-MM-DD")
+        const currentDate = new Date()
 
         // Validamos los datos obtenidos por el body
         if (!service || !date) {
@@ -36,31 +33,30 @@ export const createAppointment = async (req: Request, res: Response) => {
             })
         }
 
+        const datS = new Date(date.setHours(0, 0, 0, 0))
+
         const appointmentExists = await Appointment.find({
             where: {
+                appointmentDatetime: datS,
                 user: {
                     id: id
                 },
-            }
-        })
-
-        console.log(appointmentExists);
-
-
-        appointmentExists.map(element => {
-            for (const key in element) {
-                if (element.appointmentDatetime.toString() === date) {
-                    // console.log(element);
-                    
-                    return res.status(400).json({
-                        success: false,
-                        message: `Appointment already exists!`
-                    })
+                service: {
+                    id: service
                 }
             }
         })
 
+        console.log(appointmentExists);
+        // console.log(date);
+        // console.log(datS);
 
+        if (appointmentExists.length !== 0) {
+            return res.status(400).json({
+                success: false,
+                message: `Appointment already exists!`
+            })
+        }
 
         // if (appointmentExists) {
         //     return res.status(400).json({
@@ -71,7 +67,7 @@ export const createAppointment = async (req: Request, res: Response) => {
 
         // Creamos una nueva Appointment
         const newAppointment = new Appointment()
-        newAppointment.appointmentDatetime = new Date(date)
+        newAppointment.appointmentDatetime = datS
         newAppointment.user = {
             id: id
         } as User
@@ -83,7 +79,7 @@ export const createAppointment = async (req: Request, res: Response) => {
 
         res.status(200).json({
             success: true,
-            message: `Mew appointment created!`,
+            message: `New appointment created!`,
             data: newAppointment
         })
     } catch (error) {
@@ -183,7 +179,8 @@ export const getAppointments = async (req: Request, res: Response) => {
             select: {
                 appointmentDatetime: true,
                 service: {
-                    serviceName: true
+                    serviceName: true,
+                    id: true
                 }
             }
         })
@@ -243,6 +240,57 @@ export const getAppointmentsById = async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: `cannot call appointment`,
+            error: error
+        })
+    }
+}
+
+export const deleteOwnAppointment = async (req: Request, res: Response) => {
+    try {
+        const date = new Date(req.body.date)
+        const service = req.body.service
+        const userId = req.tokenData.userID
+
+        if (!date || !service) {
+            return res.status(400).json({
+                success: false,
+                message: `date or service invalid!`
+            })
+        }
+
+        const datS = new Date(date.setHours(0, 0, 0, 0))
+
+        const appointmentExists = await Appointment.find({
+            where: {
+                appointmentDatetime: datS,
+                user: {
+                    id: userId
+                },
+                service: {
+                    id: service
+                }
+            }
+        })
+
+        if (appointmentExists.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: `Appointment doesn't exists!`
+            })
+        }
+
+        console.log(appointmentExists[0].id);
+
+        await Appointment.delete(appointmentExists[0].id)
+
+        res.status(200).json({
+            success: true,
+            message: `Appointment deleted!`
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: `cannot delete appointment`,
             error: error
         })
     }
